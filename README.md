@@ -21,6 +21,7 @@ Clone blog.
 
 Install Theme
 
+    $ mkdir themes
     $ cd themes
     $ git clone https://github.com/zhe/hugo-theme-slim slim
 
