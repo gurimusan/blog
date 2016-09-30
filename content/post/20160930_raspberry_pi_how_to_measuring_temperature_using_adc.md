@@ -1,5 +1,4 @@
 +++
-draft = true
 date = "2016-09-29T23:52:56+09:00"
 title = "Raspberry PI で、ADCを使って温度を測定する"
 slug = "raspberry-pi-how-to-measuring-temperature-using-adc"
