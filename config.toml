@@ -1,5 +1,5 @@
 languageCode = "ja-JP"
-baseurl = "http://gurimusan.github.io/"
+baseurl = "http://gurimusan.github.io/blog/"
 title = "gurimusan blog"
 canonifyurls = true
 theme = "slim"
