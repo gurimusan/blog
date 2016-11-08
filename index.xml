@@ -6,8 +6,252 @@
     <description>Recent content on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Thu, 29 Sep 2016 23:52:56 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 08 Nov 2016 18:35:06 +0900</lastBuildDate>
     <atom:link href="https://gurimusan.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ansibleでEC2インスタンスを作成する</title>
+      <link>https://gurimusan.github.io/blog/post/how-to-create-ec2-instance-use-ansible/</link>
+      <pubDate>Tue, 08 Nov 2016 18:35:06 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/how-to-create-ec2-instance-use-ansible/</guid>
+      <description>
+
+&lt;h1 id=&#34;やったこと&#34;&gt;やったこと&lt;/h1&gt;
+
+&lt;p&gt;ansibleを使って、aws ec2インスタンスを作成する。&lt;/p&gt;
+
+&lt;h1 id=&#34;実行環境&#34;&gt;実行環境&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Mac OS X El Capitan 10.11.6&lt;/li&gt;
+&lt;li&gt;python 2.7.12&lt;/li&gt;
+&lt;li&gt;ansible 2.2.0.0&lt;/li&gt;
+&lt;li&gt;boto 2.43.0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;事前に必要なこと-及び必要なツール&#34;&gt;事前に必要なこと、及び必要なツール&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;aws上のVPCの構築&lt;/li&gt;
+&lt;li&gt;IAMユーザ、及びアクセスキー・シークレットキーの入手&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/yyuu/pyenv&#34;&gt;pyenv&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/direnv/direnv&#34;&gt;direnv&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;ディレクトリ構成&#34;&gt;ディレクトリ構成&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;.
+├── .envrc
+├── .python-version
+├── hosts
+│   └── development
+│       ├── ec2.ini
+│       ├── ec2.py
+│       ├── inventry
+│       └── group_vars
+│           └── all.yml
+├── roles
+│   └── ec2
+│       └── tasks
+│           ├── instance.yml
+│           ├── keypair.yml
+│           ├── main.yml
+│           └── security_group.yml
+└── ec2.yml(プレイブック)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;direnv&#34;&gt;direnv&lt;/h1&gt;
+
+&lt;p&gt;適用なディレクトリを作って、下記を実行し、環境変数にAWSのAPI用の接続情報を設定する。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ (
+echo &#39;export AWS_ACCESS_KEY_ID=&amp;lt;アクセスキー&amp;gt;&#39;
+echo &#39;export AWS_SECRET_ACCESS_KEY=&amp;lt;シークレットキー&amp;gt;&#39;
+) &amp;gt; .envrc
+$ direnv allow
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;python&#34;&gt;python&lt;/h1&gt;
+
+&lt;p&gt;pyenv使ってpythonのインストール、2.7系ならなんでも良い。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ pyenv install 2.7.12
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上記で作ったディレクトリに移動した時に、特定のpython環境を使うように設定する。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ pyenv virtualenv 2.7.12 example_cm_py_27_12
+$ echo &#39;example_cm_py_27_12&#39; &amp;gt; .python-version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;boto と ansibleをインストールする。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ pip install boto==2.43.0
+$ pip install ansible==2.2.0.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;ec2用のdynamic-inventory-ファイルを入手する&#34;&gt;EC2用のdynamic inventory ファイルを入手する&lt;/h1&gt;
+
+&lt;p&gt;「&lt;a href=&#34;http://docs.ansible.com/ansible/intro_dynamic_inventory.html#example-aws-ec2-external-inventory-script&#34;&gt;Example: AWS EC2 External Inventory Script&lt;/a&gt;」から&lt;a href=&#34;https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.py&#34;&gt;ec2.py&lt;/a&gt;と&lt;a href=&#34;https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.ini&#34;&gt;ec2.ini&lt;/a&gt;を入手して、「hosts/development」配下に配置する。&lt;/p&gt;
+
+&lt;p&gt;「ec2.py」には、実行権限を付与する。&lt;/p&gt;
+
+&lt;h1 id=&#34;プレイブックを作成する&#34;&gt;プレイブックを作成する&lt;/h1&gt;
+
+&lt;p&gt;「ec2.yml」というファイル名でプレイブックを作成する。※ファイル名はなんでも良い。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  roles:
+    - role: ec2
+
+- hosts: launched_{group_name}
+  remote_user: ec2-user
+  gather_facts: no
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;イベントリファイルを作成する&#34;&gt;イベントリファイルを作成する&lt;/h1&gt;
+
+&lt;p&gt;「hosts/development」配下に「inventry」というファイルを作成する。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[localhost]
+localhost ansible_python_interpreter=~/.pyenv/shims/python
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;イベントリ用の変数定義を行うために、「hosts/development/group_vars」というディレクトリを作成し、「hosts/development/group_vars/all.yml」に下記の変数定義を行う。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;aws:
+  # key pair to use on the instance
+  keypair_name: example_development
+  # security group name, and instance tag name.
+  group_name: example_development
+  # リージョン
+  region: ap-northeast-1
+  # Amazon linux の最新のディスクイメージ
+  ec2_image: ami-cbf90ecb
+  # EC2 のインスタンスタイプ
+  ec2_instance_type: t2.micro
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;ec2ロールの作成&#34;&gt;EC2ロールの作成&lt;/h1&gt;
+
+&lt;p&gt;roles/ec2/tasks/main.yml&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+- include: keypair.yml
+- include: security_group.yml
+- include: instance.yml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;roles/ec2/tasks/kyepair.yml&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+- name: Create EC2 keypair.
+  ec2_key:
+    # Name of the key pair.
+    name: &amp;quot;{{ aws.keypair_name }}&amp;quot;
+    # The AWS region to use.
+    region: &amp;quot;{{ aws.region }}&amp;quot;
+  register: ec2_keypair
+
+- name: Create keypair file.
+  file:
+    path=~/.ssh/{{ ec2_keypair.key.name }}.pem
+    state=touch
+    mode=0600
+  when: ec2_keypair.key.private_key is defined
+
+- name: Write keypair to file.
+  local_action: shell echo &amp;quot;{{ ec2_keypair.key.private_key }}&amp;quot; &amp;gt; ~/.ssh/{{ ec2_keypair.key.name }}.pem
+  when: ec2_keypair.key.private_key is defined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;roles/ec2/tasks/security_group.yml&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+- name: Create EC2 Security Group.
+  ec2_group:
+    # Name of the security group.
+    name: &amp;quot;{{ aws.group_name }}&amp;quot;
+    # Description of the security group.
+    description: &amp;quot;{{ aws.group_name }} server security group&amp;quot;
+    # The AWS region to use.
+    region: &amp;quot;{{ aws.region }}&amp;quot;
+
+    # Inbound.
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: icmp
+        from_port: -1 # icmp type, -1 = any type
+        to_port: -1 # icmp subtype, -1 = any subtype
+        cidr_ip: 10.0.0.0/0
+
+    # Outbound.
+    rules_egress:
+      - proto: all
+        from_port: 0
+        to_port: 65535
+        cidr_ip: 0.0.0.0/0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;roles/ec2/tasks/instance.yml&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+- name: Create EC2 instance.
+  ec2:
+    # ami ID to use for the instance.
+    image: &amp;quot;{{ aws.ec2_image }}&amp;quot;
+    # instance type to use for the instance.
+    instance_type: &amp;quot;{{ aws.ec2_instance_type }}&amp;quot;
+    # The AWS region to use.
+    region: &amp;quot;{{ aws.region }}&amp;quot;
+    # key pair to use on the instance
+    key_name: &amp;quot;{{ aws.keypair_name }}&amp;quot;
+    # security group (or list of groups) to use with the instance.
+    group: &amp;quot;{{ aws.group_name }}&amp;quot;
+    instance_tags:
+      Name: &amp;quot;{{ aws.group_name }}&amp;quot;
+    wait: yes
+    wait_timeout: 300
+  register: ec2
+
+- name: Add new instance to host group
+  add_host: hostname={{ item.public_ip }} groupname=&amp;quot;launched_{{aws.group_name}}&amp;quot;
+  with_items: &#39;{{ec2.instances}}&#39;
+
+- name: Wait for SSH to come up
+  wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+  with_items: &#39;{{ec2.instances}}&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;実行&#34;&gt;実行&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ansible-playbook -i hosts/development ec2.yml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;参考にしたサイト&#34;&gt;参考にしたサイト&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.ansible.com/ansible/ec2_module.html&#34;&gt;ec2 - create, terminate, start or stop an instance in ec2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.ansible.com/ansible/ec2_group_module.html&#34;&gt;ec2_group - maintain an ec2 VPC security group.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.ansible.com/ansible/ec2_key_module.html&#34;&gt;ec2_key - maintain an ec2 key pair.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Raspberry PI で、ADCを使って温度を測定する</title>
