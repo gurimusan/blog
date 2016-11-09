@@ -118,7 +118,7 @@ localhost ansible_python_interpreter=~/.pyenv/shims/python
 
 イベントリ用の変数定義を行うために、「hosts/development/group_vars」というディレクトリを作成し、「hosts/development/group_vars/all.yml」に下記の変数定義を行う。
 
-```
+```yaml
 aws:
   # key pair to use on the instance
   keypair_name: example_development
@@ -137,7 +137,7 @@ EC2ロールの作成
 
 roles/ec2/tasks/main.yml
 
-```
+```yaml
 ---
 - include: keypair.yml
 - include: security_group.yml
@@ -146,7 +146,7 @@ roles/ec2/tasks/main.yml
 
 roles/ec2/tasks/kyepair.yml
 
-```
+```yaml
 ---
 - name: Create EC2 keypair.
   ec2_key:
@@ -170,7 +170,7 @@ roles/ec2/tasks/kyepair.yml
 
 roles/ec2/tasks/security_group.yml
 
-```
+```yaml
 ---
 - name: Create EC2 Security Group.
   ec2_group:
@@ -210,7 +210,7 @@ roles/ec2/tasks/security_group.yml
 
 roles/ec2/tasks/instance.yml
 
-```
+```yaml
 ---
 - name: Create EC2 instance.
   ec2:

@@ -149,7 +149,7 @@ localhost ansible_python_interpreter=~/.pyenv/shims/python
 
 <p>イベントリ用の変数定義を行うために、「hosts/development/group_vars」というディレクトリを作成し、「hosts/development/group_vars/all.yml」に下記の変数定義を行う。</p>
 
-<pre><code>aws:
+<pre><code class="language-yaml">aws:
   # key pair to use on the instance
   keypair_name: example_development
   # security group name, and instance tag name.
@@ -166,7 +166,7 @@ localhost ansible_python_interpreter=~/.pyenv/shims/python
 
 <p>roles/ec2/tasks/main.yml</p>
 
-<pre><code>---
+<pre><code class="language-yaml">---
 - include: keypair.yml
 - include: security_group.yml
 - include: instance.yml
@@ -174,7 +174,7 @@ localhost ansible_python_interpreter=~/.pyenv/shims/python
 
 <p>roles/ec2/tasks/kyepair.yml</p>
 
-<pre><code>---
+<pre><code class="language-yaml">---
 - name: Create EC2 keypair.
   ec2_key:
     # Name of the key pair.
@@ -197,7 +197,7 @@ localhost ansible_python_interpreter=~/.pyenv/shims/python
 
 <p>roles/ec2/tasks/security_group.yml</p>
 
-<pre><code>---
+<pre><code class="language-yaml">---
 - name: Create EC2 Security Group.
   ec2_group:
     # Name of the security group.
@@ -236,7 +236,7 @@ localhost ansible_python_interpreter=~/.pyenv/shims/python
 
 <p>roles/ec2/tasks/instance.yml</p>
 
-<pre><code>---
+<pre><code class="language-yaml">---
 - name: Create EC2 instance.
   ec2:
     # ami ID to use for the instance.
