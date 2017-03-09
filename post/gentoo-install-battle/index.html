@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> Gentoo Linux をインストールする &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/post/gentoo-install-battle/">Gentoo Linux をインストールする</a></h2>
+          <span class="post-date">Mar 8, 2017 </span>
+          <div class="post-content">
+            
+
+<h1 id="gentoo-linux-をインストールする">Gentoo Linux をインストールする</h1>
+
+<h2 id="概要">概要</h2>
+
+<p>転職し、新しい会社に入社した。</p>
+
+<p>PCを支給してくれるいうことで、macにしようかなと思っていたのだが、折角なのでdockerをまともに使える環境が良いなと思い、linuxベースの開発環境を作ることにした。</p>
+
+<p>そんな折、<a href="http://d.hatena.ne.jp/joker1007/20161125/1480069437">MacBook Proを捨ててThinkpad T460sを買ってgentooを入れた</a>という記事をはてブで見つけて、gentooベースにすることにした。</p>
+
+<p>PCはノートパソコンで英語配列のものを考え、thinkpadかvaioにしようかと思ったが、thinkpad t460sにした。</p>
+
+<p>t460sには、もともとwindowsがインストールされているが、その上にGentoo Linux をインストールして、デュアルブート環境にする。</p>
+
+<h2 id="gentoo歴">Gentoo歴</h2>
+
+<p>6〜7年ほど前、家で1年ほど開発機として使っていた。その後、mac book買ったため、現在まで使っていない。</p>
+
+<h2 id="thinkpad-t460s">Thinkpad T460S</h2>
+
+<p>マシンスペック。</p>
+
+<ul>
+<li>CPU i7 6600U</li>
+<li>HDD NVMe対応SSD 512GB</li>
+<li>メモリ 24G</li>
+<li>液晶 14型 WQHD 2560×1440</li>
+<li>キーボード 英語配列</li>
+<li>OS Windows 10 Home</li>
+</ul>
+
+<h2 id="インストールメディアの作成">インストールメディアの作成</h2>
+
+<p><a href="https://www.gentoo.org/downloads/">ダウンロードページ</a>からLiveDVDをダンロードして、mac上でUSBにddして焼いた。</p>
+
+<pre><code>$ diskutil unmountDisk /dev/disk2
+$ dd if=/Users/gurimusan/Downloads/livedvd-amd64-multilib-20160704.iso of=/dev/disk2 bs=1m
+$ diskutil eject /dev/disk2
+</code></pre>
+
+<h2 id="インストール前にやること">インストール前にやること</h2>
+
+<h3 id="uefi-のセキュアブートを切る">UEFI のセキュアブートを切る</h3>
+
+<p>UEFIを操作してセキュアブートを切る。</p>
+
+<ul>
+<li><a href="https://wiki.archlinuxjp.org/index.php/Windows_%E3%81%A8_Arch_%E3%81%AE%E3%83%87%E3%83%A5%E3%82%A2%E3%83%AB%E3%83%96%E3%83%BC%E3%83%88#UEFI_Secure_Boot">Windows と Arch のデュアルブート</a></li>
+</ul>
+
+<h3 id="高速スタートアップを無効化する">高速スタートアップを無効化する</h3>
+
+<p>&ldquo;コントロールパネル&rdquo;→&rdquo;ハードウェアとサウンド&rdquo;→&rdquo;電源オプション&rdquo;→&rdquo;カバーを閉じたときの動作を選択&rdquo;から無効化する。</p>
+
+<h3 id="windows上でハードディスクのパーティションを分ける">Windows上でハードディスクのパーティションを分ける。</h3>
+
+<p>gentooをインストールする領域を確保するために、Cドライブが割り当てられているパーティションを縮小して領域を確保する。</p>
+
+<p>Cドライブ上のデータを壊さなければ、windows上でやらなくても良い。</p>
+
+<h2 id="gentoo-linuxのインストール">Gentoo Linuxのインストール</h2>
+
+<p>作成したインストールメディアを起動して、Gentoo Linux をインストールする。</p>
+
+<p><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/ja">ハンドブック:AMD64 - Gentoo Wiki</a> を見ながらインストールを行う。</p>
+
+<h3 id="ディスクの準備">ディスクの準備</h3>
+
+<p>パーティション構成は下記のとおり。</p>
+
+<p>前述のとおり、winのCドライブにあたるパーティションを縮小して、Gentoo Linux をインストールした領域を確保した。</p>
+
+<pre><code>nvme0n1       477G
+├─nvme0n1p1   260M      -- EFI
+├─nvme0n1p2    16M      -- winの管理系？
+├─nvme0n1p3  68.6G      -- win本体、Cドライブ
+├─nvme0n1p4  1000M      -- winのリカバリ領域
+├─nvme0n1p5    64G      -- / (ルート)
+└─nvme0n1p6 343.1G      -- /home (home)
+</code></pre>
+
+<p>新しい領域は</p>
+
+<ul>
+<li>/</li>
+<li>/home</li>
+</ul>
+
+<p>の2つに分けた。</p>
+
+<p>ファイルシステムをxfsを利用する。</p>
+
+<pre><code>$ mkfs.xfs /dev/nvme0n1p5
+$ mkfs.xfs /dev/nvme0n1p6
+</code></pre>
+
+<p>フォーマットしたパーティションをマウントする。</p>
+
+<pre><code>$ mount /dev/nvme0n1p5 /mnt/gentoo
+$ mkdir /mnt/gentoo/home /mnt/gentoo/boot
+$ mount /dev/nvme0n1p6 /mnt/gentoo/home
+$ mount /dev/nvme0n1p1 /mnt/gentoo/boot
+</code></pre>
+
+<h3 id="gentooインストールファイルをインストール">Gentooインストールファイルをインストール</h3>
+
+<p>時刻を合わせる。</p>
+
+<pre><code>$ ntpd -q -g
+</code></pre>
+
+<p>Gentooミラーリストからstage tarballを取得する。</p>
+
+<pre><code>$ cd /mnt/gentoo
+$ links https://www.gentoo.org/downloads/mirrors/
+</code></pre>
+
+<p>stage tarballを展開する。</p>
+
+<pre><code>$ tar xvjpf stage3-*.tar.bz2 --xattrs
+</code></pre>
+
+<p>/mnt/gentoo/etc/portage/make.conf を編集してGentooコンパイルオプションを設定する。</p>
+
+<p>CFLAGにはマシンアーキテクチャ（-march）と、最適化レベル（-O）を設定する。</p>
+
+<pre><code>CFLAGS=&quot;-march=broadwell -mtune=broadwell -O2 -pipe&quot;
+</code></pre>
+
+<p>-marchに skylakeの指定をするとコンパイル時にエラーとなった。</p>
+
+<p>調べたところ、<a href="https://wiki.gentoo.org/wiki/Safe_CFLAGS#Skylake">Safe CFLAGS - Gentoo Wiki</a> にskylakeの設定例があったため、broadwellに変更した。</p>
+
+<p>MAKEOPTSでどれだけ並列してコンパイルを実施するか設定する。</p>
+
+<pre><code>MAKEOPTS=&quot;-j4&quot;
+</code></pre>
+
+<p>CPU_FLAGS_X86 でCPUの命令セットの指定を行う。</p>
+
+<pre><code>CPU_FLAGS_X86=&quot;aes avx avx2 fma3 mmx mmxext popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3&quot;
+
+L10N=&quot;ja en&quot;
+LINGUS=&quot;ja en&quot;
+</code></pre>
+
+<h3 id="gentooベースシステムのインストール">Gentooベースシステムのインストール</h3>
+
+<p>ミラーサーバを設定しておく。</p>
+
+<pre><code>$ mirrorselect -i -o &gt;&gt; /mnt/gentoo/etc/portage/make.conf
+</code></pre>
+
+<p>dnsのコピー</p>
+
+<pre><code>$ cp -L /etc/resolv.conf /mnt/gentoo/etc/
+</code></pre>
+
+<p>必要なファイルシステムをマウントする。</p>
+
+<pre><code>$ mount -t proc proc /mnt/gentoo/proc
+$ mount --rbind /sys /mnt/gentoo/sys
+$ mount --make-rslave /mnt/gentoo/sys
+$ mount --rbind /dev /mnt/gentoo/dev
+$ mount --make-rslave /mnt/gentoo/dev
+</code></pre>
+
+<p>chrootする。</p>
+
+<pre><code>$ chroot /mnt/gentoo /bin/bash
+$ source /etc/profile
+$ export PS1='(chroot) $PS1'
+</code></pre>
+
+<p>Portageのリポジトリを更新する。</p>
+
+<pre><code>$ emerge-webrsync
+$ emerge --sync
+</code></pre>
+
+<p>systemdが含んだプロファイルを選択する。</p>
+
+<pre><code>$ eselect profile list
+Available profile symlink targets:
+  [1]   default/linux/amd64/13.0
+  [2]   default/linux/amd64/13.0/selinux
+  [3]   default/linux/amd64/13.0/desktop
+  [4]   default/linux/amd64/13.0/desktop/gnome
+  [5]   default/linux/amd64/13.0/desktop/gnome/systemd
+  [6]   default/linux/amd64/13.0/desktop/plasma
+  [7]   default/linux/amd64/13.0/desktop/plasma/systemd
+  [8]   default/linux/amd64/13.0/developer
+  [9]   default/linux/amd64/13.0/no-multilib
+  [10]  default/linux/amd64/13.0/systemd *
+  [11]  default/linux/amd64/13.0/x32
+  [12]  hardened/linux/amd64
+  [13]  hardened/linux/amd64/selinux
+  [14]  hardened/linux/amd64/no-multilib
+  [15]  hardened/linux/amd64/no-multilib/selinux
+  [16]  hardened/linux/amd64/x32
+  [17]  hardened/linux/musl/amd64
+  [18]  hardened/linux/musl/amd64/x32
+  [19]  default/linux/uclibc/amd64
+  [20]  hardened/linux/uclibc/amd64
+
+$ eselect profile set 10
+</code></pre>
+
+<p>/etc/portage/make.confのUSEフラグにsystemdを追加する。</p>
+
+<p>systemd向けにパッケージを更新する。</p>
+
+<pre><code>$ emerge -auDN @world
+</code></pre>
+
+<p>vim入れる。</p>
+
+<pre><code>$ emerge -a app-editors/vim
+</code></pre>
+
+<p>タイムゾーンを設定する</p>
+
+<pre><code>$ echo 'Asia/Tyokyo' &gt; /etc/timezone
+$ emerge --config sys-libs/timezone-data
+</code></pre>
+
+<p>ロケールを設定する。</p>
+
+<pre><code>$ vim /etc/locale.gen
+en_US ISO-8859-1
+en_US.UTF-8 UTF-8
+ja_JP.EUC-JP EUC-JP
+ja_JP.UTF-8 UTF-8
+ja_JP.SHIFT_JIS SHIFT_JIS
+
+$ locale-gen
+
+$ eselect locale list
+Available targets for the LANG variable:
+  [1]   C
+  [2]   en_US
+  [3]   en_US.iso88591
+  [4]   en_US.utf8 *
+  [5]   ja_JP
+  [6]   ja_JP.eucjp
+  [7]   ja_JP.shiftjis
+  [8]   ja_JP.ujis
+  [9]   ja_JP.utf8
+  [10]  japanese
+  [11]  japanese.euc
+  [12]  POSIX
+  [ ]   (free form)
+
+$ eselect locale set 4
+</code></pre>
+
+<p>環境設定の再読み込み。</p>
+
+<pre><code>$ env-update
+$ source /etc/profile
+$ export PS1=&quot;(chroot) $PS1&quot;
+</code></pre>
+
+<h3 id="カーネルの設定">カーネルの設定</h3>
+
+<pre><code>$ emerge -a sys-kernel/gentoo-sources
+$ emerge -a sys-apps/pciutils
+$ cd /usr/src/linux
+$ make menuconfig
+$ make &amp;&amp; make modules_install
+$ make install
+</code></pre>
+
+<h3 id="システムの設定">システムの設定</h3>
+
+<p>fstabの設定。</p>
+
+<pre><code>$ cat /etc/fstab
+PARTUUID=5ce260de-80a3-4984-a4ea-758e917e3501       /boot           vfat    noauto,noatime                  1   2
+PARTUUID=d193f1a5-edec-4c52-bbd0-5aa43de8f3be       /           xfs noatime                     0   1
+PARTUUID=acabd133-51ed-4b85-bbb2-b5add70bef5f       /home           xfs noatime                     0   2
+</code></pre>
+
+<p>grubはnvme未対応のため、利用できない。</p>
+
+<p>なので、systemd-bootを利用する。</p>
+
+<pre><code>$ bootctl --path=/boot install
+
+$ vim /boot/loader/loader.conf
+default gentoo
+timeout 5
+editor  0
+
+$ vim /boot/loader/entries/gentoo.conf
+title   Gentoo Linux
+linux   /EFI/gentoo/vmlinuz-4.9.6-gentoo-r1
+options root=PARTUUID=d193f1a5-edec-4c52-bbd0-5aa43de8f3be init=/usr/lib/systemd/systemd rw noefi
+</code></pre>
+
+<p>カーネルイメージの配置。</p>
+
+<pre><code>$ mkdir /boot/EFI/gentoo
+$ cp /boot/vmlinuz-4.9.6-gentoo-r1 /boot/EFI/gentoo/.
+$ cp /boot/System.map-4.9.6-gentoo-r1 /boot/EFI/gentoo/.
+$ cp /boot/config-4.9.6-gentoo-r1 /boot/EFI/gentoo/.
+</code></pre>
+
+<p>rebootして起動できればOK。</p>
+
+<pre><code>$ exit
+$ cd
+$ umount -R /mnt/gentoo
+$ shutdown -h now
+</code></pre>
+
+<h2 id="インストール後の感想">インストール後の感想</h2>
+
+<p>今のところ満足。やっぱり動作が軽快なのが良い。</p>
+
+<p>日本語入力の候補がウィンドウの左下に出てくること以外は。。。</p>
+
+<h2 id="インストールしたもの">インストールしたもの</h2>
+
+<ul>
+<li>awesome</li>
+<li>rxvt-unicode</li>
+<li>slim</li>
+<li>zsh</li>
+<li>git</li>
+<li>chromium</li>
+<li>firefox</li>
+<li>neovim</li>
+<li>ranger</li>
+<li>spacefm</li>
+<li>feh</li>
+<li>fcitx</li>
+<li>mozc</li>
+<li>scrot</li>
+</ul>
+
+          </div>
+        </div>
+        <div class="pagination"> 
+          <a class="btn next " href="https://gurimusan.github.io/blog/post/how-to-create-ec2-instance-use-ansible/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  
+</body>
+
+</html>
