@@ -4,14 +4,8 @@ gurimusan blog
 Setup
 -----
 
-Install hugo, use direnv.
+Install hugo.
 
-    $ mkdir blog
-    $ (
-        echo 'export GOPATH=${PWD}'
-        echo 'direnv: export ~GOPATH ~PATH'
-      ) > .envrc
-    $ direnv allow
     $ go get -v github.com/spf13/hugo
 
 Clone blog.
