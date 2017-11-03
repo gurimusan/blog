@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on gurimusan blog</title>
+    <link>https://gurimusan.github.io/blog/tags/</link>
+    <description>Recent content in Tags on gurimusan blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Wed, 08 Mar 2017 23:52:56 +0900</lastBuildDate>
+    
+	<atom:link href="https://gurimusan.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dual Boot</title>
+      <link>https://gurimusan.github.io/blog/tags/dual-boot/</link>
+      <pubDate>Wed, 08 Mar 2017 23:52:56 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/tags/dual-boot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gentoo</title>
+      <link>https://gurimusan.github.io/blog/tags/gentoo/</link>
+      <pubDate>Wed, 08 Mar 2017 23:52:56 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/tags/gentoo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Iot</title>
+      <link>https://gurimusan.github.io/blog/tags/iot/</link>
+      <pubDate>Thu, 29 Sep 2016 23:52:56 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/tags/iot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://gurimusan.github.io/blog/tags/linux/</link>
+      <pubDate>Wed, 08 Mar 2017 23:52:56 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Raspberrypi</title>
+      <link>https://gurimusan.github.io/blog/tags/raspberrypi/</link>
+      <pubDate>Thu, 29 Sep 2016 23:52:56 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/tags/raspberrypi/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
