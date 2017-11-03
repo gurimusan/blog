@@ -6,10 +6,29 @@
     <description>Recent content on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Wed, 08 Mar 2017 23:52:56 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 03 Nov 2017 05:12:38 +0000</lastBuildDate>
     
 	<atom:link href="https://gurimusan.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>coursera 機械学習 3週目</title>
+      <link>https://gurimusan.github.io/blog/post/20171103_coursera-machine-learning-week3/</link>
+      <pubDate>Fri, 03 Nov 2017 05:12:38 +0000</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/20171103_coursera-machine-learning-week3/</guid>
+      <description>ロジスティック回帰モデル(Logistic Regression Model) 分類 メール受け取った時、そのメールがスパムか否かを判断するようなことを分類問題という。
+スパムの場合は$1$、スパムではない場合は$0$としする。
+$0.5$より大きいすべての予測を$1$としてマッピングし、$0.5$未満をすべて0にマッピングする。
+$$ h_{ \theta }(x) \geqq 0.5 \to y = 1 $$
+$$ h_{ \theta }(x) \lt 0.5 \to y = 0 $$
+このように$0$か$1$かのような分類するような問題に、線形回帰を用いて分類を行ったとして、直線への当てはまりが悪くうまくいかない。
+そこで、仮説関数$h(x)$が$0 \leqq h(x) \leqq 1$となるような変形を行う。
+ロジスティック回帰(Logistic Regression )による仮説関数の表現 線形回帰の仮説関数は、$\theta$の転置行列にベクトル$\boldsymbol{ X }$を掛けたものであった。
+$$ h(x) = \theta^{ \mathrm{ T } } \boldsymbol{ X } $$
+ロジスティック回帰(Logistic regression)の仮説関数は、$\theta$の転置行列にベクトル$\boldsymbol{ X }$を掛けたものをシグモイド関数(sigmoid function)に代入したものになる。
+$$ h_{ \theta }(x) = g(\theta^{ \mathrm{ T } } \boldsymbol{ X }) $$</description>
+    </item>
     
     <item>
       <title>Gentoo Linux をインストールする</title>
