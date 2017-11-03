@@ -1,0 +1,9 @@
+[[plugins]]
+repo = 'godlygeek/tabular'
+
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+hook_add = '''
+let g:vim_markdown_frontmatter = 1
+'''

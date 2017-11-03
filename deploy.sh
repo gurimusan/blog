@@ -3,7 +3,7 @@
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
 # Build the project.
-docker run --rm -it -v "$PWD":/src gurimusan/hugo hugo
+docker run --rm -it -v "$PWD":/project gurimusan/blog hugo
 
 # Add changes to git.
 git add -A

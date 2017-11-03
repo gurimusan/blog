@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Iot on gurimusan blog</title>
-    <link>https://gurimusan.github.io/blog/tags/iot/index.xml</link>
+    <link>https://gurimusan.github.io/blog/tags/iot/</link>
     <description>Recent content in Iot on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <atom:link href="https://gurimusan.github.io/blog/tags/iot/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Sep 2016 23:52:56 +0900</lastBuildDate>
+    
+	<atom:link href="https://gurimusan.github.io/blog/tags/iot/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Raspberry PI で、ADCを使って温度を測定する</title>
@@ -14,261 +17,16 @@
       <pubDate>Thu, 29 Sep 2016 23:52:56 +0900</pubDate>
       
       <guid>https://gurimusan.github.io/blog/post/raspberry-pi-how-to-measuring-temperature-using-adc/</guid>
-      <description>
-
-&lt;h1 id=&#34;やりたいこと&#34;&gt;やりたいこと&lt;/h1&gt;
-
-&lt;p&gt;アナログ温度センサを使って、Raspberry PIで測る。&lt;/p&gt;
-
-&lt;h1 id=&#34;使用する機器-及び部品&#34;&gt;使用する機器、及び部品&lt;/h1&gt;
-
-&lt;p&gt;温度センサは MCP9700を利用する。&lt;/p&gt;
-
-&lt;p&gt;MCP9700はアナログセンサで、Raspberry PI のピンはデジタルな入力しかできないので、アナログ-デジタル変換を行うために、ADコンバータ MCP3008を利用する。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Raspberry PI3 Model B&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://akizukidenshi.com/catalog/g/gI-03286/&#34;&gt;温度センサ MCP9700&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://akizukidenshi.com/catalog/g/gI-09485/&#34;&gt;ADコンバータ MCP3008&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://akizukidenshi.com/catalog/g/gP-00315/&#34;&gt;ブレッドボード EIC-801&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;ジャンパワイア&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;raspberry-piでspiをセットアッフ-する&#34;&gt;Raspberry PiでSPIをセットアップする&lt;/h1&gt;
-
-&lt;p&gt;MCP3008は、SPIバスで接続する必要があるため、Raspberry PI のSPIを有効にする。&lt;/p&gt;
-
-&lt;p&gt;下記コマンドを実行。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo raspi-config
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Advanced Optionsで A6 SPIを選択して、下記の両方で Yes を選択。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;SPI interface to be enabled?&lt;/li&gt;
-&lt;li&gt;SPI kernel module to be loaded by default?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;再起動。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo reboot
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;spi_bcm2835 がロードされていることを確認&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ lsmod | grep spi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;SPI通信に必要なPythonライブラリをインストール。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install python-pip
-$ sudo pip install spidev
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;ブレッドボード配線&#34;&gt;ブレッドボード配線&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://gurimusan.github.io/blog/img/20160930_raspberry_pi_how_to_measuring_temperature_using_adc/breadboard.jpg&#34; alt=&#34;ブレッドボードの配線&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;温度センサ-mcp9700-の配線&#34;&gt;温度センサ MCP9700 の配線&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://akizukidenshi.com/download/MCP9701-ETO.pdf&#34;&gt;データシート1&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://akizukidenshi.com/download/mcp9700.pdf&#34;&gt;データシート2&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;VDD -&amp;gt; Raspberry Pi 3.3V&lt;/li&gt;
-&lt;li&gt;VOUT -&amp;gt; VOUT -&amp;gt; MCP3008 CH0&lt;/li&gt;
-&lt;li&gt;GND -&amp;gt; Raspberry Pi GND&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;mcp3008の配線&#34;&gt;MCP3008の配線&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://akizukidenshi.com/download/ds/microchip/mcp3008.pdf&#34;&gt;データシート&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;MCP3008 VDD -&amp;gt; Raspberry PI 3.3V&lt;/li&gt;
-&lt;li&gt;MCP3008 VREF -&amp;gt; Raspberry PI 3.3V&lt;/li&gt;
-&lt;li&gt;MCP3008 AGND -&amp;gt; Raspberry PI GND&lt;/li&gt;
-&lt;li&gt;MCP3008 CLK -&amp;gt; Raspberry PI GPIO 11 (SCLK)&lt;/li&gt;
-&lt;li&gt;MCP3008 DOUT -&amp;gt; Raspberry PI GPIO 9 (MISO)&lt;/li&gt;
-&lt;li&gt;MCP3008 DIN -&amp;gt; Raspberry PI GPIO 10 (MOSI)&lt;/li&gt;
-&lt;li&gt;MCP3008 CS/SHDN -&amp;gt; Raspberry PI GPIP 8 (CE0)&lt;/li&gt;
-&lt;li&gt;MCP3008 DGND -&amp;gt; Raspberry PI GND&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;スクリプト&#34;&gt;スクリプト&lt;/h1&gt;
-
-&lt;p&gt;下記を adc_tmp36.py というファイル名で保存。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# -*- coding: utf-8 -*-
-
-import sys
-
-import time
-
-import spidev
-
-spi = spidev.SpiDev()
-spi.open(0,0)
-
-
-def analog_read(channel):
-    r = spi.xfer2([1, (8 + channel) &amp;lt;&amp;lt; 4, 0])
-    adc_out = ((r[1]&amp;amp;3) &amp;lt;&amp;lt; 8) + r[2]
-    return adc_out
-
-
-if __name__ == &#39;__main__&#39;:
-    try:
-        while True:
-            reading = analog_read(0)
-            voltage = reading * 3.3 / 1024
-            temp_c = voltage * 100 - 50
-            print(&amp;quot;Volts V=%f\tTemp C=%f&amp;quot; % (voltage, temp_c))
-            time.sleep(1)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        spi.close()
-
-    sys.exit(0)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;実行すると下記ように出力される。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ python adc_tmp36.py
-Volts V=0.802441    Temp C=30.244141
-Volts V=0.783105    Temp C=28.310547
-Volts V=0.795996    Temp C=29.599609
-Volts V=0.799219    Temp C=29.921875
-Volts V=0.799219    Temp C=29.921875
-Volts V=0.799219    Temp C=29.921875
-Volts V=0.799219    Temp C=29.921875
-Volts V=0.799219    Temp C=29.921875
-Volts V=0.802441    Temp C=30.244141
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;室温は25℃くらいだが、高く表示される。&lt;/p&gt;
-
-&lt;p&gt;精度は ±4℃ らしいので、その誤差の範囲なのか？&lt;/p&gt;
-
-&lt;h1 id=&#34;スクリプトの説明&#34;&gt;スクリプトの説明&lt;/h1&gt;
-
-&lt;h2 id=&#34;analog-read&#34;&gt;analog_read&lt;/h2&gt;
-
-&lt;p&gt;MCP3008の特定のチャネルへの送受信のやりとりをする関数。&lt;/p&gt;
-
-&lt;p&gt;CP3008のデータシートを見ると、MCP3008への送受信を行う方法が記載されている。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://gurimusan.github.io/blog/img/20160930_raspberry_pi_how_to_measuring_temperature_using_adc/mcp3008_spi_communication.png&#34; alt=&#34;CP3008の入力値と返り値&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;送信データは、&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;00000001 1xxx0000 00000000
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;のような24bitのデータとなる。&lt;/p&gt;
-
-&lt;p&gt;最初の 00000001 はスタートビット。&lt;/p&gt;
-
-&lt;p&gt;1xxx は 読み込みたいチャネルのよって変わる。&lt;/p&gt;
-
-&lt;p&gt;例えば、&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;ch 0 なら 1000&lt;/li&gt;
-&lt;li&gt;ch 1 なら 1001&lt;/li&gt;
-&lt;li&gt;ch 2 なら 1010&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;のようになる。&lt;/p&gt;
-
-&lt;p&gt;プログラムコードに戻ると、&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r = spi.xfer2([1, (8 + channel) &amp;lt;&amp;lt; 4, 0])
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;という処理では、xfer2という関数に3つの値を格納した配列を渡しているが、これが上記の24bitの送信データを表している。&lt;/p&gt;
-
-&lt;p&gt;つまり、xfer2という関数に渡している配列のうち&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;最初の要素は 1 は 00000001 を表す&lt;/li&gt;
-&lt;li&gt;2番目の要素の (8 + channel) &amp;lt;&amp;lt; 4 は 1xxx0000 を表す&lt;/li&gt;
-&lt;li&gt;3癌目の要素は 00000000 を表す&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;xfer2からの返り値は&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[0, 0, 246]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;のようなデータが返却される。&lt;/p&gt;
-
-&lt;p&gt;これも入力値と同様に24bitのデータを表す。&lt;/p&gt;
-
-&lt;p&gt;MCP3008からの受信データは、下位10bitがチャネルへ入力されたデータとなるため、&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;adc_out = ((r[1]&amp;amp;3) &amp;lt;&amp;lt; 8) + r[2]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;という処理は、xfer2から返却された配列の&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;2番目の要素と3、00000011との論理積を取ることで、下位2bitを取得する&lt;/li&gt;
-&lt;li&gt;2番目の要素の下位2bitを8bit左にシフトして、3番目の要素との論理和をとることで、受信データの下位10bitが取得する&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;最後に、取得した下位10bitのデータを返却する。&lt;/p&gt;
-
-&lt;h2 id=&#34;main&#34;&gt;main&lt;/h2&gt;
-
-&lt;p&gt;ここで行っている処理は、下記のとおり。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;analog_read関数を実行して、MCP3008のch 0のデータを読み取り、受信データの下位10bitを取得する&lt;/li&gt;
-&lt;li&gt;analog_read関数の返り値を電圧に変換する&lt;/li&gt;
-&lt;li&gt;電圧を温度（摂氏）に変換する&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;電圧への変換方法は、MCP3008のEQUATION 4-2を見ると、&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;out = (1024 * Vin) / Vref
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;と記述があるので&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Vin = (out * Vref) / 1024
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;で、MCP3008からの受信データからMPC9700から出力された電圧が求まる。&lt;/p&gt;
-
-&lt;p&gt;MPC9700のデータシートの4.0 活用情報」を見るとセンサーの変換関数が記載されている。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Vout = Tc1 * Ta + V0c
-
-Ta = 周囲温度
-Vout = センサー出力電圧
-V0c = 0℃の時のセンサーの出力電圧(500mV)
-Tc1 = 温度係数(10mV)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;なので&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Ta = Vout / Tc1 - V0c
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;で、温度が求まる。&lt;/p&gt;
-
-&lt;h1 id=&#34;参考にしたサイト&#34;&gt;参考にしたサイト&lt;/h1&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://qiita.com/masato/items/f089a17b1c9329eb7d03&#34;&gt;Raspberry PiのPythonからTMP36のアナログ温度センサとMCP3008のADコンバータを使う&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://pongsuke.hatenablog.com/entry/2016/01/08/111937&#34;&gt;温度センサーを試す&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://elinux.org/RPi_Low-level_peripherals#Model_A.2B.2C_B.2B_and_B2&#34;&gt;Raspberry PI のピン配置&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>やりたいこと アナログ温度センサを使って、Raspberry PIで測る。
+使用する機器、及び部品 温度センサは MCP9700を利用する。
+MCP9700はアナログセンサで、Raspberry PI のピンはデジタルな入力しかできないので、アナログ-デジタル変換を行うために、ADコンバータ MCP3008を利用する。
+ Raspberry PI3 Model B 温度センサ MCP9700 ADコンバータ MCP3008 ブレッドボード EIC-801 ジャンパワイア  Raspberry PiでSPIをセットアップする MCP3008は、SPIバスで接続する必要があるため、Raspberry PI のSPIを有効にする。
+下記コマンドを実行。
+$ sudo raspi-config  Advanced Optionsで A6 SPIを選択して、下記の両方で Yes を選択。
+ SPI interface to be enabled? SPI kernel module to be loaded by default?  再起動。
+$ sudo reboot  spi_bcm2835 がロードされていることを確認
+$ lsmod | grep spi  SPI通信に必要なPythonライブラリをインストール。
+$ sudo apt-get install python-pip $ sudo pip install spidev  ブレッドボード配線 温度センサ MCP9700 の配線 データシート1</description>
     </item>
     
   </channel>
