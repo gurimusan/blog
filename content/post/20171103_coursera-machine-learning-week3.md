@@ -1,7 +1,6 @@
 ---
 title: "coursera 機械学習 3週目"
 date: 2017-11-03T05:12:38Z
-draft: false
 ---
 
 ロジスティック回帰モデル(Logistic Regression Model)
