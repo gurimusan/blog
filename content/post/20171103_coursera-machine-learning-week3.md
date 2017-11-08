@@ -1,5 +1,6 @@
 ---
 title: "coursera 機械学習 3週目"
+slug: "coursera-machine-learning-week3"
 date: 2017-11-03T05:12:38Z
 ---
 

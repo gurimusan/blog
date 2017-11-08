@@ -6,17 +6,38 @@
     <description>Recent content on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Fri, 03 Nov 2017 05:12:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Nov 2017 23:30:22 +0900</lastBuildDate>
     
 	<atom:link href="https://gurimusan.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>coursera 機械学習 4週目</title>
+      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week4/</link>
+      <pubDate>Wed, 08 Nov 2017 23:30:22 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week4/</guid>
+      <description>ニューラルネットワークが必要な背景 ロジスティック回帰によって非線形が可能になった。
+ただ、膨大な数の説明変数(feature)が必要なものにロジスティック回帰を適用すると、ロジスティック回帰だと計算が追いつかなくなる。
+膨大な数の説明変数(feature)の例としては、写真を見て「これが車であるか否かを判断する」する場合、$50 \times 50$ pixelのグレースケール画像でも、2,500変数で、2次式にしても約3,000,000個のパラメータを計算することになる。(RGBだとその3倍以上)。
+そこで、よりよいアルゴリズムを有する人の脳にヒントを得たのがニューラルネットワーク(Neural Network)。
+ニューラルネットワーク(Neural Networks) 下記は、入力X($x_1$, $x_2$, $x_3$)に対して、出力Y($h_\Theta(x)$)となる３層構造のニューラルネットワークの例である。
+入力でもない、出力でもないレイアを隠れ層(hidden layer)といい、隠れ層(hidden layer)の各ノードをアクティベーションユニット(activation units)という。
+$$ a_i^{(j)} = \text{レイア $j$ のアクティベーションユニット $i$} \\
+\Theta^{(j)} = \text{レイア $j$ から レイア $j+1$ に移る際に使う重み行列} $$
+上記の図のアクティベーションユニット(activation units)、及び出力は下記のように表現される。
+$$ a_1^{(2)} = g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3) \\
+a_2^{(2)} = g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3) \\
+a_3^{(2)} = g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3) \\
+h_\Theta(x) = a_1^{(3)} = g(\Theta_{10}^{(2)}a_0^{(2)} + \Theta_{11}^{(2)}a_1^{(2)} + \Theta_{12}^{(2)}a_2^{(2)} + \Theta_{13}^{(2)}a_3^{(2)}) $$</description>
+    </item>
+    
+    <item>
       <title>coursera 機械学習 3週目</title>
-      <link>https://gurimusan.github.io/blog/post/20171103_coursera-machine-learning-week3/</link>
+      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week3/</link>
       <pubDate>Fri, 03 Nov 2017 05:12:38 +0000</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/20171103_coursera-machine-learning-week3/</guid>
+      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week3/</guid>
       <description>ロジスティック回帰モデル(Logistic Regression Model) 分類 メール受け取った時、そのメールがスパムか否かを判断するようなことを分類問題という。
 スパムの場合は$1$、スパムではない場合は$0$としする。
 $0.5$より大きいすべての予測を$1$としてマッピングし、$0.5$未満をすべて0にマッピングする。
