@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> coursera 機械学習 3週目 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week3/">coursera 機械学習 3週目</a></h2>
+          <span class="post-date">Nov 3, 2017 </span>
+          <div class="post-content">
+            
+
+<h1 id="ロジスティック回帰モデル-logistic-regression-model">ロジスティック回帰モデル(Logistic Regression Model)</h1>
+
+<h2 id="分類">分類</h2>
+
+<p>メール受け取った時、そのメールがスパムか否かを判断するようなことを分類問題という。</p>
+
+<p>スパムの場合は$1$、スパムではない場合は$0$としする。</p>
+
+<p>$0.5$より大きいすべての予測を$1$としてマッピングし、$0.5$未満をすべて0にマッピングする。</p>
+
+<p>$$
+h_{ \theta }(x) \geqq 0.5 \to y = 1
+$$</p>
+
+<p>$$
+h_{ \theta }(x) \lt 0.5 \to y = 0
+$$</p>
+
+<p>このように$0$か$1$かのような分類するような問題に、線形回帰を用いて分類を行ったとして、直線への当てはまりが悪くうまくいかない。</p>
+
+<p>そこで、仮説関数$h(x)$が$0 \leqq h(x) \leqq 1$となるような変形を行う。</p>
+
+<h2 id="ロジスティック回帰-logistic-regression-による仮説関数の表現">ロジスティック回帰(Logistic Regression )による仮説関数の表現</h2>
+
+<p>線形回帰の仮説関数は、$\theta$の転置行列にベクトル$\boldsymbol{ X }$を掛けたものであった。</p>
+
+<p>$$
+h(x) = \theta^{ \mathrm{ T } } \boldsymbol{ X }
+$$</p>
+
+<p><strong>ロジスティック回帰(Logistic regression)</strong>の仮説関数は、$\theta$の転置行列にベクトル$\boldsymbol{ X }$を掛けたものをシグモイド関数(sigmoid function)に代入したものになる。</p>
+
+<p>$$
+h_{ \theta }(x) = g(\theta^{ \mathrm{ T } } \boldsymbol{ X })
+$$</p>
+
+<p>シグモイド関数は下記のように表現される。</p>
+
+<p>$$
+g(z) = \frac{ 1 }{ 1 + e^{ -z } }
+$$</p>
+
+<p>シグモイド関数を使った仮定関数は下記のように表現される。
+$$
+h_{\theta}(x) = g(\theta^{ \mathrm{ T } } \boldsymbol{ X }) = \frac{ 1 }{ 1 + e^{ -(\theta^{ \mathrm{ T } } \boldsymbol{ X }) } }
+$$</p>
+
+<p>スパムか否かを表現すると、</p>
+
+<p>$$
+スパムとなるのは(y = 1)、h_{ \theta }(x) \geqq 0.5 、\theta^{ \mathrm{ T } } \boldsymbol{ X } \geqq 0 の時
+$$</p>
+
+<p>$$
+スパムではないのは(y = 0)、h_{ \theta }(x) \lt 0.5 、\theta^{ \mathrm{ T } } \boldsymbol{ X } \lt 0 の時
+$$</p>
+
+<p>のように表現される。</p>
+
+<h2 id="決定境界">決定境界</h2>
+
+<p>決定境界は、y = 0およびy = 1の領域を区切る線である。これは仮説関数によって作成される。</p>
+
+<p>目的関数が下記として
+$$
+h_{ \theta }(x) = \theta_0 + \theta_1 x_1 + \theta_2 x_2
+$$</p>
+
+<p>$\theta$が分かっているとする。</p>
+
+<p>$$\theta = \begin{pmatrix}5 \\ -1 \\ 0\end{pmatrix}$$</p>
+
+<p>$h_{ \theta }(x)$に$\theta$を代入すると、</p>
+
+<p>$$
+\begin{align}
+\theta_0 + \theta_1 x_1 + \theta_2 x_2
+&amp;= 5 + -1*x_1 + 0*x_2 \\<br />
+&amp;= 5 + -x_1
+\end{align}
+$$</p>
+
+<p>となり</p>
+
+<p>$$
+x_1 \leqq 5 の時、y = 1
+$$</p>
+
+<p>$$
+x_1 \gt 5 の時、y = 0
+$$</p>
+
+<p>となる。</p>
+
+<h2 id="コスト関数">コスト関数</h2>
+
+<p><strong>ロジスティック回帰(Logistic Regression )</strong>のコスト関数(Cost function)は下記のように定義される。</p>
+
+<p>$$
+J(\theta) = \dfrac{1}{m} \sum_{i=1}^m \mathrm{Cost}(h_\theta(x^{(i)}),y^{(i)})
+$$</p>
+
+<p>$$
+\begin{eqnarray}
+Cost(h_{ \theta }(x), y)
+ =
+  \begin{cases}
+    -\log (h_{\theta}(x)) &amp; \text{if y = 1} \newline
+    -\log (1 - h_{\theta}(x)) &amp; \text{if y = 0}
+  \end{cases}
+\end{eqnarray}
+$$</p>
+
+<p>このコスト関数は下記のような特徴がある。</p>
+
+<ul>
+<li>$y = 1$ の時
+
+<ul>
+<li>$h_{ \theta }(x)$ が $0$ に近づくにつれコスト関数は無限に増大する</li>
+<li>$h_{ \theta }(x)$ が $1$ に近づくにつれコスト関数は0に近づく</li>
+</ul></li>
+<li>$y = 0$ の時
+
+<ul>
+<li>$h_{ \theta }(x)$ が $0$ に近づくにつれコスト関数は0に近づく</li>
+<li>$h_{ \theta }(x)$ が $1$ に近づくにつれコスト関数は無限に増大する</li>
+</ul></li>
+</ul>
+
+<p>このコスト関数を1つの式で表現すると下記のようになる。</p>
+
+<p>$$
+J(\theta) = - \frac{1}{m} \displaystyle \sum_{i=1}^m [y^{(i)}\log (h_\theta (x^{(i)})) + (1 - y^{(i)})\log (1 - h_\theta(x^{(i)}))]
+$$</p>
+
+<p>ベクトル化された実装は次のとおり。</p>
+
+<p>$$
+\begin{align*} &amp; h = g(X\theta)\newline &amp; J(\theta) = \frac{1}{m} \cdot \left(-y^{T}\log(h)-(1-y)^{T}\log(1-h)\right) \end{align*}
+$$</p>
+
+<h2 id="最急降下法">最急降下法</h2>
+
+<p>線形回帰と同様。</p>
+
+<p>$$
+\begin{align*}&amp; Repeat \; \lbrace \newline &amp; \;
+\theta_j := \theta_j - \alpha \dfrac{\partial}{\partial \theta_j}J(\theta) \newline &amp;
+\rbrace\end{align*}
+$$</p>
+
+<p>コスト関数を偏微分して展開すると下記のように表現できる。</p>
+
+<p>$$
+\begin{align*} &amp; Repeat \; \lbrace \newline &amp; \; \theta_j := \theta_j - \frac{\alpha}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)} \newline &amp; \rbrace \end{align*}
+$$</p>
+
+<p>ベクトル化した実装は下記のとおり。</p>
+
+<p>$$
+\theta := \theta - \frac{\alpha}{m} X^{T} (g(X \theta ) - \vec{y})
+$$</p>
+
+<h2 id="コスト関数の最適化アルゴリズム">コスト関数の最適化アルゴリズム</h2>
+
+<p>最急降下法の他にもコスト関数を最小化するアルゴリズムがある。</p>
+
+<ul>
+<li>共役勾配法(Conjugate gradient)</li>
+<li>BFGS法(BFGS)</li>
+<li>L-BFGS法(L-BFGS)</li>
+</ul>
+
+<p>これらのアルゴリズムは、最急降下法と比較して下記のような特徴がある。</p>
+
+<ul>
+<li>$\alpha$を自分で選ぶ必要がない</li>
+<li>最急降下法より速く収束する</li>
+</ul>
+
+<h1 id="複数クラス分類-multiclass-classification">複数クラス分類(Multiclass Classification)</h1>
+
+<p>分類するクラスが複数になる場合、<strong>One-vs-all</strong>と方法を使って分類を行う。</p>
+
+<p><strong>One-vs-all</strong>は、1つのクラスを選択して、</p>
+
+<ul>
+<li>選択したクラス</li>
+<li>他のクラス</li>
+</ul>
+
+<p>といった分類を行う<strong>ロジスティック回帰(Logistic Regression )</strong>$h_{ \theta }^{ (i) }(x)$を適用する。これをクラスがn個あれば、n回行う。<strong>ロジスティック回帰(Logistic Regression )</strong>もn個作成して、これを全て適用し、このうち最も高い値を返したものを予測として使用する。</p>
+
+<h1 id="過学習-overfitting">過学習(Overfitting)</h1>
+
+<h2 id="過学習の問題">過学習の問題</h2>
+
+<p>特定のデータセットに特化しすぎて、その結果、正確な予測ができなくなくなる状態のことを<strong>過学習(Overfitting)</strong>という。</p>
+
+<p>回帰分析では、説明変数(feature)$x$の次数を増やせばデータへのフィット感がよくなるが、フィット感を良くしようと、説明変数(feature)$x$が多くしすぎると、仮説関数の精度が落ちる。</p>
+
+<p>ちなみに、フィット感が足りない状態のことを<strong>未学習(Underfitting)</strong>といい、関数が単純すぎるか、説明変数(feature)$x$の次数が足りない場合に発生する。</p>
+
+<p><strong>過学習(Overfitting)</strong>を解決する方法は2つある。</p>
+
+<ul>
+<li>説明変数(feature)の数を減らす</li>
+<li>正則化</li>
+</ul>
+
+<h2 id="正則化したコスト関数">正則化したコスト関数</h2>
+
+<p>正則化とは、$\theta$の値を小さくすれば、説明変数(feature)$x$による影響を小さくでき、<strong>過学習(Overfitting)</strong>しにくくするといった手法である。</p>
+
+<p>正則化したコスト関数は下記のように定義される</p>
+
+<p>$$
+min_\theta\ \dfrac{1}{2m}\  \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})^2 + \lambda\ \sum_{j=1}^n \theta_j^2
+$$</p>
+
+<p>$\lambda$が大きすぎると、コスト関数を最小化するためには$\theta$の値を小さくする必要があり、結果$\theta$が$0$に近づくため、<strong>未学習(Underfitting)</strong>が発生する。</p>
+
+<h2 id="正則化した線形回帰-regularized-linear-regression">正則化した線形回帰(Regularized Linear Regression)</h2>
+
+<p>最急降下法(Gradient Descent)は下記のとおり。</p>
+
+<p>$$
+\theta_j := \theta_j(1 - \alpha\frac{\lambda}{m}) - \alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}
+$$</p>
+
+<p>正規方程式(Normal Equation)は下記のとおり。</p>
+
+<p>$$
+\begin{align*}&amp; \theta = \left( X^TX + \lambda \cdot L \right)^{-1} X^Ty \newline&amp; \text{where}\ \ L = \begin{bmatrix} 0 &amp; &amp; &amp; &amp; \newline &amp; 1 &amp; &amp; &amp; \newline &amp; &amp; 1 &amp; &amp; \newline &amp; &amp; &amp; \ddots &amp; \newline &amp; &amp; &amp; &amp; 1 \newline\end{bmatrix}\end{align*}
+$$</p>
+
+<h2 id="正則化したロジスティック回帰-regularized-logistic-regression">正則化したロジスティック回帰(Regularized Logistic Regression)</h2>
+
+<p>コスト関数は下記のとおり。</p>
+
+<p>$$
+J(\theta) = - \frac{1}{m} \sum_{i=1}^m \large[ y^{(i)}\ \log (h_\theta (x^{(i)})) + (1 - y^{(i)})\ \log (1 - h_\theta(x^{(i)}))\large] + \frac{\lambda}{2m}\sum_{j=1}^n \theta_j^2
+$$</p>
+
+<p>最急降下法(Gradient Descent)は線形回帰と変わらない。</p>
+
+          </div>
+        </div>
+        <div class="pagination">
+          <a class="btn previous " href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week4/"> Prev</a>  
+          <a class="btn next " href="https://gurimusan.github.io/blog/post/gentoo-install-battle/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>
