@@ -1,7 +1,7 @@
 ---
 title: "coursera 機械学習 5週目"
 date: 2017-11-19T13:20:28+09:00
-draft: true
+draft: false
 ---
 
 ニューラルネットワーク(Neural Network)のコスト関数
