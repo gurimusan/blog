@@ -6,10 +6,34 @@
     <description>Recent content in Posts on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sun, 19 Nov 2017 13:20:28 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 26 Nov 2017 13:59:39 +0900</lastBuildDate>
     
 	<atom:link href="https://gurimusan.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>coursera 機械学習 6週目</title>
+      <link>https://gurimusan.github.io/blog/post/20171127_coursera-machine-learning-week6/</link>
+      <pubDate>Sun, 26 Nov 2017 13:59:39 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/20171127_coursera-machine-learning-week6/</guid>
+      <description>学習アルゴリズムの評価(Evaluation a Learning Algorithms) 次に試すものを決める(Deeciding What to Try Next) 誤差が大きい場合、検討すべき点は下記のとおり。
+ もっと多くのトレーニングデータを得るか 説明変数を少なくするか 説明変数を多くするか 多次元の説明変数を加えるか $\lambda$を大きくするか $\lambda$を小さくするか  これらは勘で選ばれることが多い。
+仮説の評価(Evaluating a Hypothesis) 仮説は誤差が少なければ良いというわけではなく、オーバーフィッティングしている可能性がある。
+オーバーフィッティングしていないか検証する手段としては、2次までの線形回帰であればグラフにすれば分かるが、説明変数が多いとグラフ化できない。
+データをトレーニングセットとテストセットの2つに分けて、トレーニングセットとテストセットの
+ コスト関数 分類問題のミス率  を比較してオーバーフィッティングしていないか判断する。
+モデルの選択とトレーニングセット/検証セット/テストセット データを学習用とテスト用とで分けるか？
+これらを使って、どうやってモデルを選択するのか？
+仮説が新しい学習用データを正確に予想するか、ということは意味しない。
+データセットを下記のように分ける。
+ トレーニングセット：60％ クロス検証セット：20％ テストセット：20％  これらのデータセットを使うことで、3つの別々のエラー値を計算できるようになる。
+ 多項式次数毎にトレーニングセットを仕様して、$\Theta$のパラメータを最適する クロス検証セットを仕様して、最小誤差を有する多項式の次数$d$を決める テストセットを用いて、一般化誤差$J_{test}^{\Theta^{(d)}}$を推定する  偏り vs 分散(Bias vs. Variance) 偏りか分散かを判断する(Diagnosing Bias vs. Variance) 目的関数がアンダーフィッティングしているのか、オーバーフィッティングしているのか調べる必要がある。
+高バイアス(hight bias)はアンダーフィッティングしている状態で、高分散(hight variance)はオーバーフィッティングしている状態で、これらの黄金比を見つける必要がある。
+トレニング誤差$J_{train}(\Theta)$は、次数を増やせば増やすほど減少する傾向にある。
+クロス検証誤差$J_{CV}(\Theta)$は、ある地点までは次数を増やせば増やすほど減少していく傾向にあり、ある地点を超えると次数を増やせば増やすほど増加していく傾向にある、すなわち凸曲線になる。
+ 高バイアス(hight bias): トレニング誤差$J_{train}(\Theta)$とクロス検証誤差$J_{CV}(\Theta)$が高い状態で$J_{CV}(\Theta) \approx J_{train}(\Theta)$ 高分散(hight variance): トレニング誤差$J_{train}(\Theta)$は低く、クロス検証誤差$J_{CV}(\Theta)$が高い状態で$J_{CV}(\Theta) \gt J_{train}(\Theta)$  正規化と偏り／分散(Regularization and Bias/Variance) ある目的関数とコスト関数。</description>
+    </item>
     
     <item>
       <title>coursera 機械学習 5週目</title>
