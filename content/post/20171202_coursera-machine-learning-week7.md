@@ -1,6 +1,7 @@
 ---
 title: "coursera 機械学習 7週目"
-date: 2017-12-02T14:07:58+09:00
+slug: "coursera-machine-learning-week7"
+date: 2017-12-01T14:07:58+09:00
 draft: false
 ---
 
@@ -114,7 +115,7 @@ $$
 \theta^{\mathrm{T}}x^{(i)} \le -1 \hspace{10pt} if \hspace{5pt}y^{(i)} = 0
 $$
 
-$\theta^{\mathrm{T}}x^{(i)}$はベクトル$\vec{\theta}$とベクトル$\vec{x^{(i)}}$の内積で、ベクトル$\vec{x^{(i)}}をベクトル$\vec{\theta}$を射影した長さを$p^{(i)}$とすると下記のように書ける。
+$\theta^{\mathrm{T}}x^{(i)}$はベクトル$\vec{\theta}$とベクトル$\vec{x^{(i)}}$の内積で、ベクトル$\vec{x^{(i)}}$をベクトル$\vec{\theta}$を射影した長さを$p^{(i)}$とすると下記のように書ける。
 
 $$
 \theta^{\mathrm{T}} x^{(i)} = p^{(i)}||\theta||

@@ -1,5 +1,6 @@
 ---
 title: "coursera 機械学習 5週目"
+slug: "coursera-machine-learning-week5"
 date: 2017-11-19T13:20:28+09:00
 draft: false
 ---
