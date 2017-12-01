@@ -1,6 +1,8 @@
 gurimusan blog
 ==============
 
+https://gurimusan.github.io/blog/
+
 Setup
 -----
 
