@@ -6,10 +6,37 @@
     <description>Recent content in Posts on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Fri, 01 Dec 2017 14:07:58 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 04 Dec 2017 12:51:59 +0900</lastBuildDate>
     
 	<atom:link href="https://gurimusan.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>coursera 機械学習 8週目</title>
+      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week8/</link>
+      <pubDate>Mon, 04 Dec 2017 12:51:59 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week8/</guid>
+      <description>教師なし学習(Unsupervised Learning) クラスタリング(Clustering) 教師なし学習: イントロダクション(Unsupervised Learning: Introduction) ラベルなしのデータセットから学習することを、教師なし学習(Unsupervised Learning)という。
+教師なし学習のトレーニングセットには、ラベルがない。なので教師なし学習では、データセットからデータ構造を探す。
+データセットからデータ構造を探すためにクラスタリングというアルゴリズムがある。
+データセットからデータ構造を探すためのアルゴリズムは、他にも幾つかあるが、まずはクラスタリングを学ぶ。
+K-Meansアルゴリズム(K-Means Algorithm) クラスタリングアルゴリズムであるK-Meansアルゴリズムを学ぶ。
+K-Meansアルゴリズムを文章で書くと下記のとおり。
+ 各クラスタの中心点(Centroid)を決める: データ$x$と同次元にあるK個のクラスタの中心点 $u_1, u_2,&amp;hellip;, u_{K} \in \mathbb{R}^{n}$ を求める データセットの要素をクラスタの割り付ける: 中心点$u_1, u_2,&amp;hellip;, u_{K}$と$x$との距離を求めて、最も距離が近いクラスタを割り付ける クラスタの中心点を更新する: クラスタへ割り付けられた要素$x$の平均を算出して、新たなクラスタの中心点(Centroid)を更新する クラスタの割り付けによる移動がなくなるまで2-3を繰り返す  目的関数の最適化(Optimization Objective) K-Meansアルゴリズムの目的関数は、$x$とクラスタの中心点$u$を使って下記のように定義される。
+$$ \displaystyle J(c^{(1)},&amp;hellip;,c^{(m)},u_{1},&amp;hellip;,u_{K}) = \frac{1}{m} \sum_{i=1}^{m} |x^{(i)} - u_{c^{(i)}}| $$
+K-Meansアルゴリズムでは、この目的関数を最小化するクラスタを選択することが推奨される。
+$$ \displaystyle min_{c^{(1)},&amp;hellip;,c^{(m)},u_{1},&amp;hellip;,u_{K}} J(c^{(1)},&amp;hellip;,c^{(m)},u_{1},&amp;hellip;,u_{K}b $$
+ランダム初期化(Random Initialization) 最初にランダムにクラスタをトレーニングセットにピックする。
+K-Meansアルゴリズムは局所最適解に収束しうるが、最適解を得るために、K-Meansアルゴリズム100回実行して、その中でコスト関数が最も小さくなるものを選べば良い。
+クラスタ数の選択(Choosing the Number of Clusters) クラスタの数はどうやって選ぶのか？
+多くの場合は、人が決める。
+自動的に決める方法とし、エルボー法というアルゴリズムがある。
+エルボー法はクラスタ数$K$を徐々に増やしていき、コスト関数の変化量が一番大きいクラスタ数$K$を選ぶ方法。
+ただし、クラスタ数$K$を増やしても、コスト関数の変化量があまりかわらない場合は、クラスタ数を決めることができない。
+その場合は、そもそもどういった目的でクラスタを分けたいのか、ということからクラスタ数を決める。
+次元数の削減(Dimensionality Reduction) 動機(Motivation) 動機Ⅰ: データ圧縮(Motivation I: Data Compression) データ圧縮は、より少ないメモリやディスク容量にデータを圧縮するだけでなく、学習アルゴリズムのスピードアップにもなる。</description>
+    </item>
     
     <item>
       <title>coursera 機械学習 7週目</title>
