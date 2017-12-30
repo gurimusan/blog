@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> coursera 機械学習 11週目 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/">coursera 機械学習 11週目</a></h2>
+          <span class="post-date">Dec 26, 2017 </span>
+          <div class="post-content">
+            
+
+<h1 id="アプリケーションの例-写真の光学文字認識-application-example-photo-ocr">アプリケーションの例: 写真の光学文字認識(Application Example: Photo OCR)</h1>
+
+<h2 id="写真の光学文字認識-photo-ocr">写真の光学文字認識(Photo OCR)</h2>
+
+<h3 id="問題の説明とパイプライン-problem-description-and-pipeline">問題の説明とパイプライン(Problem Description and Pipeline)</h3>
+
+<p>写真の中の文字をコンピューターで読み取る試みを写真OCR、写真の光学文字認識という。</p>
+
+<p>コンピューターで文字を読み取る場合、幾つかの工程(Pipeline)に分けて処理する必要がある。</p>
+
+<p>下記のその手順を記す。</p>
+
+<ol>
+<li>テキストを探す(Text Detection)</li>
+<li>文字の分離(Character Segmentation)</li>
+<li>文字の認識(Character Recognition)</li>
+</ol>
+
+<p>これらの工程で、それぞれ目的関数を用意して、教師あり学習(Supervised Learning)を使って学習させる。</p>
+
+<h4 id="テキストを探す-text-detection">テキストを探す(Text Detection)</h4>
+
+<p>文字を含んだ画像($y=1$)と文字を含んでいない画像($y=0$)を大量に用意して、アルゴリズムに学習させる。</p>
+
+<h4 id="文字の分離-character-segmentation">文字の分離(Character Segmentation)</h4>
+
+<p>文字と文字の境界が見える画像($y=1$)と文字と文字の境界を含まない画像($y=0$)を大量に用意して、アルゴリズムに学習させる。</p>
+
+<h4 id="文字の認識-character-recognition">文字の認識(Character Recognition)</h4>
+
+<p>ラベルと同一の文字を含む画像($y=1$)とラベルと異なる文字を含む画像($y=0$)を用意して、アルゴリズムに学習させる。</p>
+
+<h3 id="スライディングウインドウ-sliding-windows">スライディングウインドウ(Sliding Windows)</h3>
+
+<p>特定のサイズの短形(例えば$10 \times 10$)を画像を端から端まで少しづつずらして走査するスライディングウィンドウ(Sliding Windows)というアルゴリズムを使って、短形の中に文字や人が含まれていないか調べる。</p>
+
+<p>1つの短形(Sliding Windows)だけでは、大き過ぎたり、小さ過ぎたりする可能性があるため、短形(Sliding Windows)は複数用意して走査を行う。</p>
+
+<h3 id="人口的に作った大量データをどのようにして得るか-getting-lots-of-data-and-artificial-data">人口的に作った大量データをどのようにして得るか(Getting Lots of Data and Artificial Data)</h3>
+
+<p>機械学習において信頼出来る方法の1つに低バイアスな学習アルゴリズムに大量のトレーニングセットを用意して訓練する、という手法がある。</p>
+
+<p>大量にデータを用意することで、良い学習アルゴリズムを得ることができる。</p>
+
+<p>大量にデータを用意する方法としては、文字の認識(Character Recognition)であれば下記の手法がある。</p>
+
+<ul>
+<li>フォントを変える</li>
+<li>文字の大きさを変える</li>
+<li>文字を回転させる</li>
+<li>文字の位置をずらす</li>
+<li>文字を歪める</li>
+<li>背景を変える</li>
+<li>ランダムに選んだピクセルの値を０に置換する</li>
+</ul>
+
+<h3 id="シーリング分析-ceiling-analysis-what-part-of-the-pipeline-to-work-on-next">シーリング分析: (Ceiling Analysis: What Part of the Pipeline to Work on Next)</h3>
+
+<p>下記の表は各要素と、その要素精度が100%だった時のシステム全体の精度をまとめたものである。</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">コンポーネント</th>
+<th align="center">精度</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">全体(Overall system)</td>
+<td align="center">72%</td>
+</tr>
+
+<tr>
+<td align="center">文字を探す(Text Detection)</td>
+<td align="center">89%</td>
+</tr>
+
+<tr>
+<td align="center">文字の分離(Character Segmentation)</td>
+<td align="center">90%</td>
+</tr>
+
+<tr>
+<td align="center">文字の認識(Character Recognition)</td>
+<td align="center">100%</td>
+</tr>
+</tbody>
+</table>
+
+<p>文字を探す(Text Detection)精度が$100%$になった時$72%$から$89%$となるため、$17%$改善する。</p>
+
+<p>文字の分離(Character Segmentation)の精度が$100%$になった時$89%$から$90%$となるため、$1%$改善する。</p>
+
+<p>文字の認識(Character Recognition)の精度が$100%$になった時$90%$から$100%$となるため、$10%$改善する。</p>
+
+<p>これにより分かることは、</p>
+
+<ul>
+<li>文字を探す(Text Detection)の精度を改善することで、全体の精度を大きく改善できる</li>
+<li>文字の分離(Character Segmentation)の精度を改善しても、全体の精度を$1%$しか改善できないので、あまり意味がない</li>
+</ul>
+
+<p>ということである。</p>
+
+<p>このように、どの要素が最も改善できるポテンシャルがあるのか調べる手法をシーリング分析(Ceiling Analysis)という。</p>
+
+          </div>
+        </div>
+        <div class="pagination"> 
+          <a class="btn next " href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week10/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>
