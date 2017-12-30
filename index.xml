@@ -6,10 +6,53 @@
     <description>Recent content on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Mon, 04 Dec 2017 12:51:59 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 26 Dec 2017 13:22:08 +0900</lastBuildDate>
     
 	<atom:link href="https://gurimusan.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>coursera 機械学習 11週目</title>
+      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/</link>
+      <pubDate>Tue, 26 Dec 2017 13:22:08 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/</guid>
+      <description>アプリケーションの例: 写真の光学文字認識(Application Example: Photo OCR) 写真の光学文字認識(Photo OCR) 問題の説明とパイプライン(Problem Description and Pipeline) 写真の中の文字をコンピューターで読み取る試みを写真OCR、写真の光学文字認識という。
+コンピューターで文字を読み取る場合、幾つかの工程(Pipeline)に分けて処理する必要がある。
+下記のその手順を記す。
+ テキストを探す(Text Detection) 文字の分離(Character Segmentation) 文字の認識(Character Recognition)  これらの工程で、それぞれ目的関数を用意して、教師あり学習(Supervised Learning)を使って学習させる。
+テキストを探す(Text Detection) 文字を含んだ画像($y=1$)と文字を含んでいない画像($y=0$)を大量に用意して、アルゴリズムに学習させる。
+文字の分離(Character Segmentation) 文字と文字の境界が見える画像($y=1$)と文字と文字の境界を含まない画像($y=0$)を大量に用意して、アルゴリズムに学習させる。
+文字の認識(Character Recognition) ラベルと同一の文字を含む画像($y=1$)とラベルと異なる文字を含む画像($y=0$)を用意して、アルゴリズムに学習させる。
+スライディングウインドウ(Sliding Windows) 特定のサイズの短形(例えば$10 \times 10$)を画像を端から端まで少しづつずらして走査するスライディングウィンドウ(Sliding Windows)というアルゴリズムを使って、短形の中に文字や人が含まれていないか調べる。
+1つの短形(Sliding Windows)だけでは、大き過ぎたり、小さ過ぎたりする可能性があるため、短形(Sliding Windows)は複数用意して走査を行う。
+人口的に作った大量データをどのようにして得るか(Getting Lots of Data and Artificial Data) 機械学習において信頼出来る方法の1つに低バイアスな学習アルゴリズムに大量のトレーニングセットを用意して訓練する、という手法がある。
+大量にデータを用意することで、良い学習アルゴリズムを得ることができる。
+大量にデータを用意する方法としては、文字の認識(Character Recognition)であれば下記の手法がある。
+ フォントを変える 文字の大きさを変える 文字を回転させる 文字の位置をずらす 文字を歪める 背景を変える ランダムに選んだピクセルの値を０に置換する  シーリング分析: (Ceiling Analysis: What Part of the Pipeline to Work on Next) 下記の表は各要素と、その要素精度が100%だった時のシステム全体の精度をまとめたものである。</description>
+    </item>
+    
+    <item>
+      <title>coursera 機械学習 10週目</title>
+      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week10/</link>
+      <pubDate>Tue, 19 Dec 2017 13:19:51 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week10/</guid>
+      <description>大規模な機械学習(Large Scale Machine Learning) 大きなデータセットでの最急降下法(Gradient Descent with Large Datasets) 大きなデータセットでの学習(Learning With Large Datasets) 線形回帰の最急降下法の更新ルールは下記のとおり。
+$$ h_{\theta}(x) = \sum_{j=0}^{n}\theta_{j}x_{x} \\
+J_{train} = \frac{1}{2m} \sum_{i=0}^{m} (h_{\theta}(x^{(i)}) - y^{(i)})^{2} \\
+Repeat \lbrace \\
+\hspace{10pt} \theta_{j} := \theta_{j} - \alpha \frac{1}{m} \sum_{i=1}^{m}(h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)} \\
+\hspace{10pt} (for\ every\ j=0,&amp;hellip;,n) \\
+\rbrace $$
+$m=100,000,000$となるトレーニングセットを扱う時、勾配が十分小さな値がとるまで間、最急降下法の1ステップにおいて、1億の和を計算する必要がある。
+大規模データを扱う機械学習において、 計算量的にリーズナブルな、または効率的な方法を知りたい。
+そこで主に2つのアイディアを紹介する。
+1番目は確率的最急降下法(Stochastic Gradient Descent)、2番目はMap Reduceと呼ばれる物だ。
+確率的最急降下法(Stochastic Gradient Descent) 確率的最急降下法(Stochastic Gradient Descent)は最急降下法の1ステップにおいて、1つのデータのみを扱い、パラメータを更新する手法である。
+下記は確率的最急降下法(Stochastic Gradient Descent)のパラメータ更新のルールである。
+$$ \theta_{j} := \theta_{j} - \alpha (h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)} $$</description>
+    </item>
     
     <item>
       <title>coursera 機械学習 8週目</title>

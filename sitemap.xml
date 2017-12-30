@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/</loc>
+    <lastmod>2017-12-26T13:22:08+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gurimusan.github.io/blog/post/coursera-machine-learning-week10/</loc>
+    <lastmod>2017-12-19T13:19:51+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://gurimusan.github.io/blog/post/coursera-machine-learning-week8/</loc>
     <lastmod>2017-12-04T12:51:59+09:00</lastmod>
   </url>
@@ -78,7 +88,7 @@
   
   <url>
     <loc>https://gurimusan.github.io/blog/post/</loc>
-    <lastmod>2017-12-04T12:51:59+09:00</lastmod>
+    <lastmod>2017-12-26T13:22:08+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -96,7 +106,7 @@
   
   <url>
     <loc>https://gurimusan.github.io/blog/</loc>
-    <lastmod>2017-12-04T12:51:59+09:00</lastmod>
+    <lastmod>2017-12-26T13:22:08+09:00</lastmod>
     <priority>0</priority>
   </url>
   

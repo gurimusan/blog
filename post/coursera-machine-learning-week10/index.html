@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> coursera 機械学習 10週目 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week10/">coursera 機械学習 10週目</a></h2>
+          <span class="post-date">Dec 19, 2017 </span>
+          <div class="post-content">
+            
+
+<h1 id="大規模な機械学習-large-scale-machine-learning">大規模な機械学習(Large Scale Machine Learning)</h1>
+
+<h2 id="大きなデータセットでの最急降下法-gradient-descent-with-large-datasets">大きなデータセットでの最急降下法(Gradient Descent with Large Datasets)</h2>
+
+<h3 id="大きなデータセットでの学習-learning-with-large-datasets">大きなデータセットでの学習(Learning With Large Datasets)</h3>
+
+<p>線形回帰の最急降下法の更新ルールは下記のとおり。</p>
+
+<p>$$
+h_{\theta}(x) = \sum_{j=0}^{n}\theta_{j}x_{x} \\<br />
+J_{train} = \frac{1}{2m} \sum_{i=0}^{m} (h_{\theta}(x^{(i)}) - y^{(i)})^{2} \\<br />
+Repeat \lbrace \\<br />
+\hspace{10pt} \theta_{j} := \theta_{j} - \alpha \frac{1}{m} \sum_{i=1}^{m}(h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)} \\<br />
+\hspace{10pt} (for\ every\ j=0,&hellip;,n) \\<br />
+\rbrace
+$$</p>
+
+<p>$m=100,000,000$となるトレーニングセットを扱う時、勾配が十分小さな値がとるまで間、最急降下法の1ステップにおいて、1億の和を計算する必要がある。</p>
+
+<p>大規模データを扱う機械学習において、 計算量的にリーズナブルな、または効率的な方法を知りたい。</p>
+
+<p>そこで主に2つのアイディアを紹介する。</p>
+
+<p>1番目は確率的最急降下法(Stochastic Gradient Descent)、2番目はMap Reduceと呼ばれる物だ。</p>
+
+<h3 id="確率的最急降下法-stochastic-gradient-descent">確率的最急降下法(Stochastic Gradient Descent)</h3>
+
+<p>確率的最急降下法(Stochastic Gradient Descent)は最急降下法の1ステップにおいて、1つのデータのみを扱い、パラメータを更新する手法である。</p>
+
+<p>下記は確率的最急降下法(Stochastic Gradient Descent)のパラメータ更新のルールである。</p>
+
+<p>$$
+\theta_{j} := \theta_{j} - \alpha (h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)}
+$$</p>
+
+<ol>
+<li>トレーニングセットをシャッフルして並び替えを行う</li>
+<li>トレーニングセットの先頭のデータ$x^{(1)}$, $y^{(1)}$を取り出し、それぞれを$x^{(i)}$, $y^{(i)}$に代入する</li>
+<li>$\theta_{j} := \theta_{j} - \alpha (h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)}$でパラメータを更新する</li>
+<li>トレーニングセットから次のデータを取り出し、それぞれを$x^{(i)}$, $y^{(i)}$に代入して3を実行する、なければ終了する</li>
+</ol>
+
+<h3 id="ミニバッチ最急降下法-mini-batch-gradient-descent">ミニバッチ最急降下法(Mini-Batch Gradient Descent)</h3>
+
+<p>ミニバッチ最急降下法(Mini-Batch Gradient Descent)は、m個のトレーニングセットをb個に分けて、最急降下法の1stepにおいてb個のデータを使ってパラメータを更新する方法である。</p>
+
+<p>$m=100$で、$b=10$の場合は下記のようになる。</p>
+
+<p>$$
+Repeat \lbrace \\<br />
+\hspace{10pt} for\ i=1,11,21,&hellip;,91 \lbrace \\<br />
+\hspace{20pt} \theta_{j} := \theta_{j} - \alpha \frac{1}{10} \sum_{k=i}^{i+9}(h_{\theta}(x^{(k)} - y^{(k)}))x_{j}^{(k)} \\<br />
+\hspace{20pt} (for\ every\ j=0,&hellip;,n) \\<br />
+\hspace{10pt} \rbrace \\<br />
+\rbrace
+$$</p>
+
+<p>まとめると下記のとおり。</p>
+
+<ul>
+<li>(バッチ)最急降下法は1stepあたり、全ての($=m$個)のサンプルを使う</li>
+<li>確率的最急降下法は1stepあたり、1個のサンプルを使う</li>
+<li>ミニバッチ最急降下法は1stepあたり、$b$個のサンプルを使う</li>
+</ul>
+
+<h3 id="確率的最急降下法の収束-stochastic-gradient-descent-convergence">確率的最急降下法の収束(Stochastic Gradient Descent Convergence)</h3>
+
+<p>確率的最急降下法(Stochastic Gradient Descent)はデータ1つ毎にパラメータ$\theta$を更新するため、常に目的関数が小さくなるとは限らない。</p>
+
+<p>そのため、目的関数が収束しているのかチェックする必要がある。</p>
+
+<p>目的関数が収束しているかチェックするために、任意の回数分のコストの平均値をとり、チェックする。</p>
+
+<p>もし収束していない場合は、平均値をとる範囲を大きくすることで改善することがある。</p>
+
+<p>確率的最急降下法(Stochastic Gradient Descent)は常に最小化するわけではないので、グローバル最小の近辺を行ったり来たりする可能性がある。</p>
+
+<p>確実に収束させたい場合は、学習率$\alpha$を小さくする必要がある。</p>
+
+<p>$$
+\alpha = \frac{constant 1}{iterationNumber + constant 2}
+$$</p>
+
+<h2 id="高度なトピック-advanced-topics">高度なトピック(Advanced Topics)</h2>
+
+<h3 id="オンライン学習-online-learning">オンライン学習(Online Learning)</h3>
+
+<p>オンライン学習(Online Learning)は既存のモデルに新しいデータを1つ加えて更新しつづけるアルゴリズムである。
+常にモデルを更新しつづけるため、1度更新されたモデルを再度使うことはない。
+また、モデルを更新するのに1つだけしかデータを使わないので、1度にたくさんのデータを使う手法に比べて高速かつ省メモリであることが特徴である。</p>
+
+<p>オンラインショッピングのレコメンド機能等の動的にモデルが変化するものを学習する場合にオンライン学習(Online Learning)は有効である。</p>
+
+<p>オンライン学習(Online Learning)は最急降下法(Gradient Descent)のみだけではなく、ニューラルネットワーク(Neural Network,)やロジスティック回帰(Logistic Regression)等のアルゴリズムにも適用できる。</p>
+
+<h3 id="マップリデュースとデータ並列性-map-reduce-and-data-parallelism">マップリデュースとデータ並列性(Map Reduce and Data Parallelism)</h3>
+
+<p>マップレデュース(Map Reduce)とはデータを分割して計算して、最後に分割した計算結果を集約する手法である。</p>
+
+<p>分割したデータを違うマシン、またはマルチコアのCPUであれば違うコアで処理することで大きなデータを効率的に処理することが可能である。</p>
+
+<p>全データ$m=400$の時、$4$分割した時の場合は下記のとおり。</p>
+
+<p>$$
+temp^{(1)} = \sum_{1}^{100}(h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)}\\<br />
+temp^{(2)} = \sum_{101}^{200}(h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)}\\<br />
+temp^{(3)} = \sum_{201}^{300}(h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)}\\<br />
+temp^{(4)} = \sum_{301}^{400}(h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)}\\<br />
+\theta_{j} := \theta_{j} - \alpha \frac{1}{400} (temp^{(1)} + temp^{(2)} + temp^{(3)} + temp^{(4)})
+$$</p>
+
+          </div>
+        </div>
+        <div class="pagination">
+          <a class="btn previous " href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/"> Prev</a>  
+          <a class="btn next " href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week8/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>
