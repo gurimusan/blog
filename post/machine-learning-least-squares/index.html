@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> 機械学習 最小二乗法 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/post/machine-learning-least-squares/">機械学習 最小二乗法</a></h2>
+          <span class="post-date">Jan 2, 2018 </span>
+          <div class="post-content">
+            
+
+<h1 id="最小二乗法-least-squares">最小二乗法(Least Squares)</h1>
+
+<p>m個のデータ$(x_{1}, y_{1}),&hellip;,(x_{m}, y_{m})$を直線に当てはめたい。直線の方程式を下記のように置く。</p>
+
+<p>$$
+y = \theta_{0}x + \theta_{1}x
+$$</p>
+
+<p>もしm個のデータ$(x_{1}, y_{1}),&hellip;,(x_{m}, y_{m})$が直線$y^{i} = \theta_{0}x^{i} + \theta_{1}x^{i},\ i=1,&hellip;,m$となっていればデータ$(x^{i}, y^{i})$は全て直線$y = \theta_{0}x + \theta_{1}x$上にあるが、データは直線には一致しない。そこで</p>
+
+<p>$$
+y^{i} \approx \theta_{0}x^{i} + \theta_{1}x^{i}\\<br />
+i=1,&hellip;,m
+$$</p>
+
+<p>となるように近似して、直線のパラメータを定める。次の誤差の二乗和の最小化問題を解くことでパラメータ$\theta$を求める。</p>
+
+<p>$$
+min\ J = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})^{2}
+$$</p>
+
+<p>これを<strong>最小二乗法</strong>と呼ぶ。</p>
+
+<h2 id="例">例</h2>
+
+<p>5点$(4, -17), (15, -4), (30, -7), (100, 50), (200, 70)$に最小二乗法で直線を当てはめる。</p>
+
+<p>当てはめる直線を$y = \theta_{0} + \theta_{1}x$とすると、</p>
+
+<p>$$
+m = 5\\<br />
+J = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})^{2}
+$$</p>
+
+<p>を最小にするようにパラメータ$\theta$を求める。</p>
+
+<p>$\theta$で偏微分すると下記のようになる。</p>
+
+<p>$$
+\frac{\delta J}{\delta \theta^{i}} = \frac{1}{m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})x^{i}
+$$</p>
+
+<p>$\theta$をそれぞれで微分して$0$と置くと次のようになる。</p>
+
+<p>$$
+\begin{eqnarray}
+\frac{\delta J}{\delta \theta_{0}} &amp;=&amp; \frac{1}{5} \{ ((\theta_{0} + 4\theta_{1}) - (-17))(1) + ((\theta_{0} + 15\theta_{1}) - (-4))(1) + ((\theta_{0} + 30\theta_{1}) - (-7))(1) + ((\theta_{0} + 100\theta_{1}) - (50))(1) + ((\theta_{0} + 200\theta_{1}) - (70))(1) \} \\<br />
+&amp;=&amp; \frac{1}{5} \{ \theta_{0}(1+1+1+1+1) + \theta_{1}(4+15+30+100+200) - ((-17)+(-4)+(-7)+(50)+(70)) \} \\<br />
+&amp;=&amp; 0
+\end{eqnarray}
+$$</p>
+
+<p>$$
+\begin{eqnarray}
+\frac{\delta J}{\delta \theta_{1}} &amp;=&amp; \frac{1}{5} \{ ((\theta_{0} + 4\theta_{1}) - (-17))(4) + ((\theta_{0} + 15\theta_{1}) - (-4))(15) + ((\theta_{0} + 30\theta_{1}) - (-7))(30) + ((\theta_{0} + 100\theta_{1}) - (50))(100) + ((\theta_{0} + 200\theta_{1}) - (70))(200) \} \\<br />
+&amp;=&amp; \frac{1}{5} \{ \theta_{0}(4+15+30+100+200) + \theta_{1}(4^{2}+15^{2}+30^{2}+100^{2}+200^{2}) - ((4 \cdot -17)+(15 \cdot -4)+(30 \cdot -7)+(100 \cdot 50)+(200 \cdot 70)) \} \\<br />
+&amp;=&amp; 0
+\end{eqnarray}
+$$</p>
+
+<p>これから、次の連立一次方程式を得る。</p>
+
+<p>$$
+\begin{eqnarray}
+\left(
+  \begin{array}{ccc}
+    \frac{1}{5} (1+1+1+1+1) &amp; \frac{1}{5} (4+15+30+100+200)\\<br />
+    \frac{1}{5} (4+15+30+100+200) &amp; \frac{1}{5} (4^{2}+15^{2}+30^{2}+100^{2}+200^{2})
+  \end{array}
+\right)
+\left(
+  \begin{array}{cc}
+    \theta_{0} \\<br />
+    \theta_{1}
+  \end{array}
+\right) &amp;=&amp;
+\left(
+  \begin{array}{cc}
+    \frac{1}{5} ((-17)+(-4)+(-7)+(50)+(70))\\<br />
+    \frac{1}{5} (4 \cdot -17)+(15 \cdot -4)+(30 \cdot -7)+(100 \cdot 50)+(200 \cdot 70)
+  \end{array}
+\right)\\<br />
+\left(
+  \begin{array}{ccc}
+    5 &amp; 349 \\<br />
+    349 &amp; 51141
+  \end{array}
+\right)
+\left(
+  \begin{array}{cc}
+    \theta_{0} \\<br />
+    \theta_{1}
+  \end{array}
+\right) &amp;=&amp;
+\left(
+  \begin{array}{cc}
+    92\\<br />
+    18662
+  \end{array}
+\right)
+\end{eqnarray}
+$$</p>
+
+<p>これを解いて</p>
+
+<p>$$
+\theta_{0} = -13.503 \\<br />
+\theta_{1} = 0.457
+$$</p>
+
+<p>を得る。</p>
+
+<h2 id="pythonでの実装">pythonでの実装</h2>
+
+<p>この解はsympyを使って連立方程式を解くと、下記のような解となる。</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; import sympy
+&gt;&gt;&gt;
+&gt;&gt;&gt; x = sympy.Symbol('x')
+&gt;&gt;&gt; y = sympy.Symbol('y')
+&gt;&gt;&gt;
+&gt;&gt;&gt; points = [(4, -17), (15, -4), (30, -7), (100, 50), (200, 70)]
+&gt;&gt;&gt; m = len(points)
+&gt;&gt;&gt; theta0, theta1 = sympy.symbols('theta0, theta1')
+&gt;&gt;&gt; j = (1.0/(2*m)) * ((theta0 + theta1*x) - y) ** 2
+&gt;&gt;&gt;
+&gt;&gt;&gt; j_theta0 = sympy.diff(j, theta0)
+&gt;&gt;&gt; j_theta1 = sympy.diff(j, theta1)
+&gt;&gt;&gt;
+&gt;&gt;&gt; sum_theta0 = sum([j_theta0.subs([(x, _x), (y, _y)]) for _x, _y in points]) / 2.
+&gt;&gt;&gt; sum_theta1 = sum([j_theta1.subs([(x, _x), (y, _y)]) for _x, _y in points]) / 2.
+&gt;&gt;&gt;
+&gt;&gt;&gt; sympy.solve([sum_theta0, sum_theta1], [theta0, theta1])
+{theta0: -13.5027034293225, theta1: 0.457058788385709}
+</code></pre>
+
+<p>numpyの回帰関数<code>polyfit</code>を使うと下記のように書ける。</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; import numpy
+&gt;&gt;&gt; X = [4, 15, 30, 100, 200]
+&gt;&gt;&gt; Y = [-17, -4, -7, 50, 70]
+&gt;&gt;&gt; numpy.polyfit(X, Y, 1)
+array([  0.45705879, -13.50270343])
+</code></pre>
+
+          </div>
+        </div>
+        <div class="pagination"> 
+          <a class="btn next " href="https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  },
+  CommonHTML: { linebreaks: { automatic: true } },
+  "HTML-CSS": { linebreaks: { automatic: true } },
+         SVG: { linebreaks: { automatic: true } }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>

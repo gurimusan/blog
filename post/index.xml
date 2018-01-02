@@ -6,10 +6,30 @@
     <description>Recent content in Posts on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Tue, 26 Dec 2017 13:22:08 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jan 2018 08:49:32 +0900</lastBuildDate>
     
 	<atom:link href="https://gurimusan.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>機械学習 最小二乗法</title>
+      <link>https://gurimusan.github.io/blog/post/machine-learning-least-squares/</link>
+      <pubDate>Tue, 02 Jan 2018 08:49:32 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/machine-learning-least-squares/</guid>
+      <description>最小二乗法(Least Squares) m個のデータ$(x_{1}, y_{1}),&amp;hellip;,(x_{m}, y_{m})$を直線に当てはめたい。直線の方程式を下記のように置く。
+$$ y = \theta_{0}x + \theta_{1}x $$
+もしm個のデータ$(x_{1}, y_{1}),&amp;hellip;,(x_{m}, y_{m})$が直線$y^{i} = \theta_{0}x^{i} + \theta_{1}x^{i},\ i=1,&amp;hellip;,m$となっていればデータ$(x^{i}, y^{i})$は全て直線$y = \theta_{0}x + \theta_{1}x$上にあるが、データは直線には一致しない。そこで
+$$ y^{i} \approx \theta_{0}x^{i} + \theta_{1}x^{i}\\
+i=1,&amp;hellip;,m $$
+となるように近似して、直線のパラメータを定める。次の誤差の二乗和の最小化問題を解くことでパラメータ$\theta$を求める。
+$$ min\ J = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})^{2} $$
+これを最小二乗法と呼ぶ。
+例 5点$(4, -17), (15, -4), (30, -7), (100, 50), (200, 70)$に最小二乗法で直線を当てはめる。
+当てはめる直線を$y = \theta_{0} + \theta_{1}x$とすると、
+$$ m = 5\\
+J = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})^{2} $$</description>
+    </item>
     
     <item>
       <title>coursera 機械学習 11週目</title>
