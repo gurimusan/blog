@@ -84,11 +84,14 @@ $$</p>
 min_\theta\ \frac{1}{m} \sum^m_{i=1} [y^{(i)} cost_1 (\theta^{\mathrm{T}} x^{(i)}) + (1 - y^{(i)}) cost_0 (\theta^{\mathrm{T}} x^{(i)})] + \frac{\lambda}{2m} \sum^n_{i=1} \theta^2_j
 $$</p>
 
-<p>$C=\frac{\lambda}{m}$とすると</p>
+<p>コスト関数は下記のようにも書ける。</p>
 
 <p>$$
 min_\theta\ C \sum^m_{i=1} [y^{(i)} cost_1 (\theta^{\mathrm{T}} x^{(i)}) + (1 - y^{(i)}) cost_0 (\theta^{\mathrm{T}} x^{(i)})] + \frac{1}{2} \sum^n_{i=1} \theta^2_j
 $$</p>
+
+<p>$\lambda$は大きくなると正則化項の影響が大きくなり、小さくなると正則化項の影響を小さくなるので、$C=\frac{\lambda}{m}$となる変数を導入して、正則化項から$\lambda$を除去した下記のようなコスト関数でも意味的には同じになる。
+$m$は第一項、第二項にあるので単純に除去。</p>
 
 <p>このコスト関数は上記の前提条件</p>
 
@@ -209,7 +212,7 @@ $$</p>
 
 <h2 id="kernelsⅱ">KernelsⅡ</h2>
 
-<p>$<strong>ランドマーク(landmark)</strong>l^{i}$はトレーニングデータをそのまま使う。つまり、$l^{1}=x^{1}$, $l^{2}=x^{2}$,&hellip;,$l^{m}=x^{m}$となる。</p>
+<p><strong>ランドマーク(landmark)</strong>$l^{i}$はトレーニングデータをそのまま使う。つまり、$l^{1}=x^{1}$, $l^{2}=x^{2}$,&hellip;,$l^{m}=x^{m}$となる。</p>
 
 <p><strong>サポートベクターマシン(support vector machine, SVM)</strong>と<strong>カーネル(Kernels)</strong>を組み合わせると、コスト関数は下記のように書ける。</p>
 

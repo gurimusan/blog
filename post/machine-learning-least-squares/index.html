@@ -52,17 +52,17 @@
 y = \theta_{0}x + \theta_{1}x
 $$</p>
 
-<p>もしm個のデータ$(x_{1}, y_{1}),&hellip;,(x_{m}, y_{m})$が直線$y^{i} = \theta_{0}x^{i} + \theta_{1}x^{i},\ i=1,&hellip;,m$となっていればデータ$(x^{i}, y^{i})$は全て直線$y = \theta_{0}x + \theta_{1}x$上にあるが、データは直線には一致しない。そこで</p>
+<p>もしm個のデータ$(x_{1}, y_{1}),&hellip;,(x_{m}, y_{m})$が直線$y^{(i)} = \theta_{0}x^{(i)} + \theta_{1}x^{(i)},\ i=1,&hellip;,m$となっていればデータ$(x^{(i)}, y^{(i)})$は全て直線$y = \theta_{0}x + \theta_{1}x$上にあるが、データは直線には一致しない。そこで</p>
 
 <p>$$
-y^{i} \approx \theta_{0}x^{i} + \theta_{1}x^{i}\\<br />
+y^{(i)} \approx \theta_{0}x^{(i)} + \theta_{1}x^{(i)}\\<br />
 i=1,&hellip;,m
 $$</p>
 
 <p>となるように近似して、直線のパラメータを定める。次の誤差の二乗和の最小化問題を解くことでパラメータ$\theta$を求める。</p>
 
 <p>$$
-min\ J = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})^{2}
+min\ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{(i)} + \theta_{1}x^{(i)}) - y^{(i)})^{2}
 $$</p>
 
 <p>これを<strong>最小二乗法</strong>と呼ぶ。</p>
@@ -75,7 +75,7 @@ $$</p>
 
 <p>$$
 m = 5\\<br />
-J = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})^{2}
+J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{(i)} + \theta_{1}x^{(i)}) - y^{(i)})^{2}
 $$</p>
 
 <p>を最小にするようにパラメータ$\theta$を求める。</p>
@@ -83,14 +83,14 @@ $$</p>
 <p>$\theta$で偏微分すると下記のようになる。</p>
 
 <p>$$
-\frac{\delta J}{\delta \theta^{i}} = \frac{1}{m} \sum_{i=1}^{m}((\theta_{0}x^{i} + \theta_{1}x^{i}) - y^{i})x^{i}
+\frac{\partial J(\theta)}{\partial \theta^{(i)}} = \frac{1}{m} \sum_{i=1}^{m}((\theta_{0}x^{(i)} + \theta_{1}x^{(i)}) - y^{(i)})x^{(i)}
 $$</p>
 
 <p>$\theta$をそれぞれで微分して$0$と置くと次のようになる。</p>
 
 <p>$$
 \begin{eqnarray}
-\frac{\delta J}{\delta \theta_{0}} &amp;=&amp; \frac{1}{5} \{ ((\theta_{0} + 4\theta_{1}) - (-17))(1) + ((\theta_{0} + 15\theta_{1}) - (-4))(1) + ((\theta_{0} + 30\theta_{1}) - (-7))(1) + ((\theta_{0} + 100\theta_{1}) - (50))(1) + ((\theta_{0} + 200\theta_{1}) - (70))(1) \} \\<br />
+\frac{\partial J(\theta)}{\partial \theta_{0}} &amp;=&amp; \frac{1}{5} \{ ((\theta_{0} + 4\theta_{1}) - (-17))(1) + ((\theta_{0} + 15\theta_{1}) - (-4))(1) + ((\theta_{0} + 30\theta_{1}) - (-7))(1) + ((\theta_{0} + 100\theta_{1}) - (50))(1) + ((\theta_{0} + 200\theta_{1}) - (70))(1) \} \\<br />
 &amp;=&amp; \frac{1}{5} \{ \theta_{0}(1+1+1+1+1) + \theta_{1}(4+15+30+100+200) - ((-17)+(-4)+(-7)+(50)+(70)) \} \\<br />
 &amp;=&amp; 0
 \end{eqnarray}
@@ -98,7 +98,7 @@ $$</p>
 
 <p>$$
 \begin{eqnarray}
-\frac{\delta J}{\delta \theta_{1}} &amp;=&amp; \frac{1}{5} \{ ((\theta_{0} + 4\theta_{1}) - (-17))(4) + ((\theta_{0} + 15\theta_{1}) - (-4))(15) + ((\theta_{0} + 30\theta_{1}) - (-7))(30) + ((\theta_{0} + 100\theta_{1}) - (50))(100) + ((\theta_{0} + 200\theta_{1}) - (70))(200) \} \\<br />
+\frac{\partial J(\theta)}{\partial \theta_{1}} &amp;=&amp; \frac{1}{5} \{ ((\theta_{0} + 4\theta_{1}) - (-17))(4) + ((\theta_{0} + 15\theta_{1}) - (-4))(15) + ((\theta_{0} + 30\theta_{1}) - (-7))(30) + ((\theta_{0} + 100\theta_{1}) - (50))(100) + ((\theta_{0} + 200\theta_{1}) - (70))(200) \} \\<br />
 &amp;=&amp; \frac{1}{5} \{ \theta_{0}(4+15+30+100+200) + \theta_{1}(4^{2}+15^{2}+30^{2}+100^{2}+200^{2}) - ((4 \cdot -17)+(15 \cdot -4)+(30 \cdot -7)+(100 \cdot 50)+(200 \cdot 70)) \} \\<br />
 &amp;=&amp; 0
 \end{eqnarray}
