@@ -6,10 +6,30 @@
     <description>Recent content on gurimusan blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Tue, 02 Jan 2018 08:49:32 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 25 Apr 2018 13:49:43 +0900</lastBuildDate>
     
 	<atom:link href="https://gurimusan.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PRML 2.3.1 条件付き確率分布</title>
+      <link>https://gurimusan.github.io/blog/post/prml-2.3.1-conditional-gaussian-distribution/</link>
+      <pubDate>Wed, 25 Apr 2018 13:49:43 +0900</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/post/prml-2.3.1-conditional-gaussian-distribution/</guid>
+      <description>PRML 2.3.1 条件付き確率分布 PRML難しい。
+分からないところ理解するとために情報を整理する。
+今回は「2.3.1 条件付き確率分布」の内容を整理する。
+この節でいいたいこと 多変量ガウス分布の特性の１つとして、節の最初に下記にのように述べられている。
+ 2つの変数集合の同時分布がガウス分布に従うなら、一方の変数集合が与えられた時の、もう一方の集合の条件付き分布もガウス分布に従う  これを具体的に書くと
+ 2つの変数集合$\boldsymbol{x_a}$, $\boldsymbol{x_b}$の同時分布$p(\boldsymbol{x_a},\boldsymbol{x_b})$がガウス分布に従うなら、一方の変数集合$\boldsymbol{x_b}$が与えられた時の、もう一方の集合の条件付き分布$p(\boldsymbol{x_a}|\boldsymbol{x_b})$もガウス分布に従う  ということ。
+条件付き分布がガウス分布であるということ 多変量ガウスは $$ N(\boldsymbol{x}|\boldsymbol{\mu},\Sigma) = \frac{1}{(2\pi)^{\frac{D}{2}}} \frac{1}{| \Sigma |^{\frac{1}{2}}} \exp\left(-\frac{1}{2} (\boldsymbol{x} - \boldsymbol{\mu})^{\mathrm{T}} \Sigma^{-1} (\boldsymbol{x} - \boldsymbol{\mu}) \right) \tag{2.43} $$ となる。
+多変量ガウスがD次元として、ベクトル$\boldsymbol{x}$を２つの互いに素な部分集合$\boldsymbol{x_{a}}$と$\boldsymbol{x_{b}}$に分割する。
+ここで$\boldsymbol{x_{a}}$は$\boldsymbol{x}$の最初の$M$個の要素で、$\boldsymbol{x_{b}}$は残りの$D-M$個の要素で構成する。
+$$ \boldsymbol{x} = \begin{pmatrix} \boldsymbol{x_{a}} \\\ \boldsymbol{x_{b}} \end{pmatrix} \tag{2.65} $$
+平均ベクトル$\boldsymbol{\mu}$の分割も定義する。 $$ \boldsymbol{\mu} = \begin{pmatrix} \boldsymbol{\mu_{a}} \\\ \boldsymbol{\mu_{b}} \end{pmatrix} \tag{2.66} $$
+共分散行列$\Sigma$も同様に $$ \boldsymbol{\Sigma} = \begin{pmatrix} \boldsymbol{\Sigma_{aa}} &amp;amp;&amp;amp; \boldsymbol{\Sigma_{ab}} \\\ \boldsymbol{\Sigma_{ba}} &amp;amp;&amp;amp; \boldsymbol{\Sigma_{bb}} \end{pmatrix} \tag{2.</description>
+    </item>
     
     <item>
       <title>機械学習 最小二乗法</title>
