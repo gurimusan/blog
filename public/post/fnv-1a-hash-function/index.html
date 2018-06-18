@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> FNV-1a ハッシュ関数 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/post/fnv-1a-hash-function/">FNV-1a ハッシュ関数</a></h2>
+          <span class="post-date">Jun 19, 2018 </span>
+          <div class="post-content">
+            
+
+<h1 id="fnv-1a">FNV-1a</h1>
+
+<p>ハッシュ関数の実装。</p>
+
+<p>キー値のそれぞれのバイトに対して、排他的論理和と乗算を1回ずつ行い、ハッシュ値を求めるアルゴリズム。</p>
+
+<pre><code>hash = offset_basis
+for each octet_of_data to be hashed
+        hash = hash xor octet_of_data
+        hash = hash * FNV_prime
+return hash
+</code></pre>
+
+<p>ハッシュ値のサイズによって、offset_basisとFNV_primeは値を変える。</p>
+
+<h2 id="offset-basis">offset_basis</h2>
+
+<ul>
+<li>32bit 2166136261</li>
+<li>64bit 14695981039346656037</li>
+<li>128bit 144066263297769815596495629667062367629</li>
+<li>256bit 100029257958052580907070968620625704837092796014241193945225284501741471925557</li>
+</ul>
+
+<h2 id="fnv-prime">FNV_prime</h2>
+
+<ul>
+<li>32bit $2^{24} + 2^8 + 0x93 = 16777619$</li>
+<li>64bit $2^{40} + 2^8 + 0xb3 = 1099511628211$</li>
+<li>128bit $2^{88} + 2^8 + 0x3b = 309485009821345068724781371$</li>
+<li>256bit $2^{168} + 2^8 + 0x63 = 374144419156711147060143317175368453031918731002211$</li>
+</ul>
+
+<h2 id="実装-golang">実装(golang)</h2>
+
+<pre><code>const offset32 = 2166136261
+const prime32 = 16777619
+
+func FNV32a(data []byte) uint32 {
+	var hash uint32 = offset32
+	for _, c := range data {
+		hash ^= uint32(c)
+		hash *= prime32
+	}
+	return hash
+}
+</code></pre>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="http://www.isthe.com/chongo/tech/comp/fnv/">http://www.isthe.com/chongo/tech/comp/fnv/</a></p>
+
+          </div>
+        </div>
+        <div class="pagination"> 
+          <a class="btn next " href="https://gurimusan.github.io/blog/post/prml-2.3.1-conditional-gaussian-distribution/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  },
+  CommonHTML: { linebreaks: { automatic: true } },
+  "HTML-CSS": { linebreaks: { automatic: true } },
+         SVG: { linebreaks: { automatic: true } }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>
