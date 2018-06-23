@@ -13,10 +13,10 @@
     
     <item>
       <title>Murmur ハッシュ関数</title>
-      <link>https://gurimusan.github.io/blog/post/murmur-hash-function/</link>
+      <link>https://gurimusan.github.io/blog/2018/06/murmur-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E9%96%A2%E6%95%B0/</link>
       <pubDate>Thu, 21 Jun 2018 01:58:20 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/murmur-hash-function/</guid>
+      <guid>https://gurimusan.github.io/blog/2018/06/murmur-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E9%96%A2%E6%95%B0/</guid>
       <description>MurmurHash 2008年にAustin Applebyという人が考案した非暗号ハッシュ。
 fnvハッシュより高速なハッシュ関数。
 fnvハッシュは1byteずつ処理を行っているのに対し、Murmurハッシュは4byteずつ処理を行い、一度に処理するバイト数が増えるので高速になるというわけである。
@@ -33,10 +33,10 @@ MurmurHash.cpp
     
     <item>
       <title>FNV-1a ハッシュ関数</title>
-      <link>https://gurimusan.github.io/blog/post/fnv-1a-hash-function/</link>
+      <link>https://gurimusan.github.io/blog/2018/06/fnv-1a-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E9%96%A2%E6%95%B0/</link>
       <pubDate>Tue, 19 Jun 2018 01:58:20 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/fnv-1a-hash-function/</guid>
+      <guid>https://gurimusan.github.io/blog/2018/06/fnv-1a-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E9%96%A2%E6%95%B0/</guid>
       <description>FNV-1a ハッシュ関数の実装。
 キー値のそれぞれのバイトに対して、排他的論理和と乗算を1回ずつ行い、ハッシュ値を求めるアルゴリズム。
 hash = offset_basis for each octet_of_data to be hashed hash = hash xor octet_of_data hash = hash * FNV_prime return hash  ハッシュ値のサイズによって、offset_basisとFNV_primeは値を変える。
@@ -45,10 +45,10 @@ offset_basis  32bit 2166136261 64bit 14695981039346656037 128bit 144066263297769
     
     <item>
       <title>PRML 2.3.1 条件付き確率分布</title>
-      <link>https://gurimusan.github.io/blog/post/prml-2.3.1-conditional-gaussian-distribution/</link>
+      <link>https://gurimusan.github.io/blog/2018/04/prml-2.3.1-%E6%9D%A1%E4%BB%B6%E4%BB%98%E3%81%8D%E7%A2%BA%E7%8E%87%E5%88%86%E5%B8%83/</link>
       <pubDate>Wed, 25 Apr 2018 13:49:43 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/prml-2.3.1-conditional-gaussian-distribution/</guid>
+      <guid>https://gurimusan.github.io/blog/2018/04/prml-2.3.1-%E6%9D%A1%E4%BB%B6%E4%BB%98%E3%81%8D%E7%A2%BA%E7%8E%87%E5%88%86%E5%B8%83/</guid>
       <description>PRML 2.3.1 条件付き確率分布 PRML難しい。
 分からないところ理解するとために情報を整理する。
 今回は「2.3.1 条件付き確率分布」の内容を整理する。
@@ -65,10 +65,10 @@ $$ \boldsymbol{x} = \begin{pmatrix} \boldsymbol{x_{a}} \\\ \boldsymbol{x_{b}} \e
     
     <item>
       <title>機械学習 最小二乗法</title>
-      <link>https://gurimusan.github.io/blog/post/machine-learning-least-squares/</link>
+      <link>https://gurimusan.github.io/blog/2018/01/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%97%E6%B3%95/</link>
       <pubDate>Tue, 02 Jan 2018 08:49:32 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/machine-learning-least-squares/</guid>
+      <guid>https://gurimusan.github.io/blog/2018/01/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%97%E6%B3%95/</guid>
       <description>最小二乗法(Least Squares) m個のデータ$(x_{1}, y_{1}),&amp;hellip;,(x_{m}, y_{m})$を直線に当てはめたい。直線の方程式を下記のように置く。
 $$ y = \theta_{0}x + \theta_{1}x $$
 もしm個のデータ$(x_{1}, y_{1}),&amp;hellip;,(x_{m}, y_{m})$が直線$y^{(i)} = \theta_{0}x^{(i)} + \theta_{1}x^{(i)},\ i=1,&amp;hellip;,m$となっていればデータ$(x^{(i)}, y^{(i)})$は全て直線$y = \theta_{0}x + \theta_{1}x$上にあるが、データは直線には一致しない。そこで
@@ -85,10 +85,10 @@ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{(i)} + \theta_{1}x^{(i)}) 
     
     <item>
       <title>coursera 機械学習 11週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/</link>
+      <link>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-11%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Tue, 26 Dec 2017 13:22:08 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week11/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-11%E9%80%B1%E7%9B%AE/</guid>
       <description>アプリケーションの例: 写真の光学文字認識(Application Example: Photo OCR) 写真の光学文字認識(Photo OCR) 問題の説明とパイプライン(Problem Description and Pipeline) 写真の中の文字をコンピューターで読み取る試みを写真OCR、写真の光学文字認識という。
 コンピューターで文字を読み取る場合、幾つかの工程(Pipeline)に分けて処理する必要がある。
 下記のその手順を記す。
@@ -106,10 +106,10 @@ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}((\theta_{0}x^{(i)} + \theta_{1}x^{(i)}) 
     
     <item>
       <title>coursera 機械学習 10週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week10/</link>
+      <link>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-10%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Tue, 19 Dec 2017 13:19:51 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week10/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-10%E9%80%B1%E7%9B%AE/</guid>
       <description>大規模な機械学習(Large Scale Machine Learning) 大きなデータセットでの最急降下法(Gradient Descent with Large Datasets) 大きなデータセットでの学習(Learning With Large Datasets) 線形回帰の最急降下法の更新ルールは下記のとおり。
 $$ h_{\theta}(x) = \sum_{j=0}^{n}\theta_{j}x_{x} \\
 J_{train} = \frac{1}{2m} \sum_{i=0}^{m} (h_{\theta}(x^{(i)}) - y^{(i)})^{2} \\
@@ -128,10 +128,10 @@ $$ \theta_{j} := \theta_{j} - \alpha (h_{\theta}(x^{(i)} - y^{(i)}))x_{j}^{(i)} 
     
     <item>
       <title>coursera 機械学習 8週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week8/</link>
+      <link>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-8%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Mon, 04 Dec 2017 12:51:59 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week8/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-8%E9%80%B1%E7%9B%AE/</guid>
       <description>教師なし学習(Unsupervised Learning) クラスタリング(Clustering) 教師なし学習: イントロダクション(Unsupervised Learning: Introduction) ラベルなしのデータセットから学習することを、教師なし学習(Unsupervised Learning)という。
 教師なし学習のトレーニングセットには、ラベルがない。なので教師なし学習では、データセットからデータ構造を探す。
 データセットからデータ構造を探すためにクラスタリングというアルゴリズムがある。
@@ -155,10 +155,10 @@ K-Meansアルゴリズムは局所最適解に収束しうるが、最適解を�
     
     <item>
       <title>coursera 機械学習 7週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week7/</link>
+      <link>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-7%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Fri, 01 Dec 2017 14:07:58 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week7/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-7%E9%80%B1%E7%9B%AE/</guid>
       <description>Large Margin Classification Optimization objective ロジスティック回帰のコスト関数は下記であった。
 $$ min_\theta - \frac{1}{m} \sum_{i=1}^m \large[ y^{(i)}\ \log (h_\theta (x^{(i)})) + (1 - y^{(i)})\ \log (1 - h_\theta(x^{(i)}))\large] + \frac{\lambda}{2m}\sum_{j=1}^n \theta_j^2 $$
 この目的関数を最小化するためには、$z=\theta^{T}x$として、下記の条件を満たす$\theta$を学習する必要があった。
@@ -171,10 +171,10 @@ $$ min_\theta\ \frac{1}{m} \sum^m_{i=1} [y^{(i)} cost_1 (\theta^{\mathrm{T}} x^{
     
     <item>
       <title>coursera 機械学習 6週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week6/</link>
+      <link>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-6%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Sun, 26 Nov 2017 13:59:39 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week6/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-6%E9%80%B1%E7%9B%AE/</guid>
       <description>学習アルゴリズムの評価(Evaluation a Learning Algorithms) 次に試すものを決める(Deeciding What to Try Next) 誤差が大きい場合、検討すべき点は下記のとおり。
  もっと多くのトレーニングデータを得るか 説明変数を少なくするか 説明変数を多くするか 多次元の説明変数を加えるか $\lambda$を大きくするか $\lambda$を小さくするか  これらは勘で選ばれることが多い。
 仮説の評価(Evaluating a Hypothesis) 仮説は誤差が少なければ良いというわけではなく、オーバーフィッティングしている可能性がある。
@@ -195,10 +195,10 @@ $$ min_\theta\ \frac{1}{m} \sum^m_{i=1} [y^{(i)} cost_1 (\theta^{\mathrm{T}} x^{
     
     <item>
       <title>coursera 機械学習 5週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week5/</link>
+      <link>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-5%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Sun, 19 Nov 2017 13:20:28 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week5/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-5%E9%80%B1%E7%9B%AE/</guid>
       <description>ニューラルネットワーク(Neural Network)のコスト関数 ロジスティック回帰のコスト関数は下記のように定義された。
 $$ J(\theta) = - \frac{1}{m} \sum_{i=1}^m \large[ y^{(i)}\ \log (h_\theta (x^{(i)})) + (1 - y^{(i)})\ \log (1 - h_\theta(x^{(i)}))\large] + \frac{\lambda}{2m}\sum_{j=1}^n \theta_j^2 \\
 $$
@@ -213,10 +213,10 @@ $$ \dfrac{\partial}{\partial \Theta_{i,j}^{(l)}}J(\Theta) $$</description>
     
     <item>
       <title>coursera 機械学習 4週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week4/</link>
+      <link>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-4%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Wed, 08 Nov 2017 23:30:22 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week4/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-4%E9%80%B1%E7%9B%AE/</guid>
       <description>ニューラルネットワークが必要な背景 ロジスティック回帰によって非線形が可能になった。
 ただ、膨大な数の説明変数(feature)が必要なものにロジスティック回帰を適用すると、ロジスティック回帰だと計算が追いつかなくなる。
 膨大な数の説明変数(feature)の例としては、写真を見て「これが車であるか否かを判断する」する場合、$50 \times 50$ pixelのグレースケール画像でも、2,500変数で、2次式にしても約3,000,000個のパラメータを計算することになる。(RGBだとその3倍以上)。
@@ -234,10 +234,10 @@ h_\Theta(x) = a_1^{(3)} = g(\Theta_{10}^{(2)}a_0^{(2)} + \Theta_{11}^{(2)}a_1^{(
     
     <item>
       <title>coursera 機械学習 3週目</title>
-      <link>https://gurimusan.github.io/blog/post/coursera-machine-learning-week3/</link>
+      <link>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-3%E9%80%B1%E7%9B%AE/</link>
       <pubDate>Fri, 03 Nov 2017 05:12:38 +0000</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/coursera-machine-learning-week3/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-3%E9%80%B1%E7%9B%AE/</guid>
       <description>ロジスティック回帰モデル(Logistic Regression Model) 分類 メール受け取った時、そのメールがスパムか否かを判断するようなことを分類問題という。
 スパムの場合は$1$、スパムではない場合は$0$としする。
 $0.5$より大きいすべての予測を$1$としてマッピングし、$0.5$未満をすべて0にマッピングする。
@@ -253,10 +253,10 @@ $$ h_{ \theta }(x) = g(\theta^{ \mathrm{ T } } \boldsymbol{ X }) $$</description
     
     <item>
       <title>Gentoo Linux をインストールする</title>
-      <link>https://gurimusan.github.io/blog/post/gentoo-install-battle/</link>
+      <link>https://gurimusan.github.io/blog/2017/03/gentoo-linux-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</link>
       <pubDate>Wed, 08 Mar 2017 23:52:56 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/gentoo-install-battle/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/03/gentoo-linux-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</guid>
       <description>Gentoo Linux をインストールする 概要 転職し、新しい会社に入社した。
 PCを支給してくれるいうことで、macにしようかなと思っていたのだが、折角なのでdockerをまともに使える環境が良いなと思い、linuxベースの開発環境を作ることにした。
 そんな折、MacBook Proを捨ててThinkpad T460sを買ってgentooを入れたという記事をはてブで見つけて、gentooベースにすることにした。
@@ -272,20 +272,20 @@ Windows上でハードディスクのパーティションを分ける。 gentoo
     
     <item>
       <title>ansibleでEC2インスタンスを作成する</title>
-      <link>https://gurimusan.github.io/blog/post/how-to-create-ec2-instance-use-ansible/</link>
+      <link>https://gurimusan.github.io/blog/2016/11/ansible%E3%81%A7ec2%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/</link>
       <pubDate>Tue, 08 Nov 2016 18:35:06 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/how-to-create-ec2-instance-use-ansible/</guid>
+      <guid>https://gurimusan.github.io/blog/2016/11/ansible%E3%81%A7ec2%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/</guid>
       <description>やったこと ansibleを使って、aws ec2インスタンスを作成する。
 実行環境  Mac OS X El Capitan 10.11.6 python 2.7.12 ansible 2.2.0.0 boto 2.43.0  事前に必要なこと、及び必要なツール  aws上のVPCの構築 IAMユーザ、及びアクセスキー・シークレットキーの入手 pyenv direnv  ディレクトリ構成 . ├── .envrc ├── .python-version ├── hosts │ └── development │ ├── ec2.ini │ ├── ec2.py │ ├── inventry │ └── group_vars │ └── all.yml ├── roles │ └── ec2 │ └── tasks │ ├── instance.yml │ ├── keypair.yml │ ├── main.yml │ └── security_group.</description>
     </item>
     
     <item>
       <title>Raspberry PI で、ADCを使って温度を測定する</title>
-      <link>https://gurimusan.github.io/blog/post/raspberry-pi-how-to-measuring-temperature-using-adc/</link>
+      <link>https://gurimusan.github.io/blog/2016/09/raspberry-pi-%E3%81%A7adc%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E6%B8%A9%E5%BA%A6%E3%82%92%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B/</link>
       <pubDate>Thu, 29 Sep 2016 23:52:56 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/raspberry-pi-how-to-measuring-temperature-using-adc/</guid>
+      <guid>https://gurimusan.github.io/blog/2016/09/raspberry-pi-%E3%81%A7adc%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E6%B8%A9%E5%BA%A6%E3%82%92%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B/</guid>
       <description>やりたいこと アナログ温度センサを使って、Raspberry PIで測る。
 使用する機器、及び部品 温度センサは MCP9700を利用する。
 MCP9700はアナログセンサで、Raspberry PI のピンはデジタルな入力しかできないので、アナログ-デジタル変換を行うために、ADコンバータ MCP3008を利用する。
@@ -296,6 +296,15 @@ $ sudo raspi-config  Advanced Optionsで A6 SPIを選択して、下記の両方
 $ sudo reboot  spi_bcm2835 がロードされていることを確認
 $ lsmod | grep spi  SPI通信に必要なPythonライブラリをインストール。
 $ sudo apt-get install python-pip $ sudo pip install spidev  ブレッドボード配線 温度センサ MCP9700 の配線 データシート1</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://gurimusan.github.io/blog/1/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://gurimusan.github.io/blog/1/01/</guid>
+      <description></description>
     </item>
     
   </channel>

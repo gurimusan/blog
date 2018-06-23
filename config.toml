@@ -6,3 +6,6 @@ theme = "slim"
 contentdir = "content"
 layoutdir = "layouts"
 publishdir = "public"
+
+[permalinks]
+  post = "/:year/:month/:title/"

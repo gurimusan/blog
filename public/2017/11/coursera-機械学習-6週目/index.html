@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> coursera 機械学習 6週目 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-6%E9%80%B1%E7%9B%AE/">coursera 機械学習 6週目</a></h2>
+          <span class="post-date">Nov 26, 2017 </span>
+          <div class="post-content">
+            
+
+<h1 id="学習アルゴリズムの評価-evaluation-a-learning-algorithms">学習アルゴリズムの評価(Evaluation a Learning Algorithms)</h1>
+
+<h2 id="次に試すものを決める-deeciding-what-to-try-next">次に試すものを決める(Deeciding What to Try Next)</h2>
+
+<p>誤差が大きい場合、検討すべき点は下記のとおり。</p>
+
+<ul>
+<li>もっと多くのトレーニングデータを得るか</li>
+<li>説明変数を少なくするか</li>
+<li>説明変数を多くするか</li>
+<li>多次元の説明変数を加えるか</li>
+<li>$\lambda$を大きくするか</li>
+<li>$\lambda$を小さくするか</li>
+</ul>
+
+<p>これらは勘で選ばれることが多い。</p>
+
+<h2 id="仮説の評価-evaluating-a-hypothesis">仮説の評価(Evaluating a Hypothesis)</h2>
+
+<p>仮説は誤差が少なければ良いというわけではなく、オーバーフィッティングしている可能性がある。</p>
+
+<p>オーバーフィッティングしていないか検証する手段としては、2次までの線形回帰であればグラフにすれば分かるが、説明変数が多いとグラフ化できない。</p>
+
+<p>データをトレーニングセットとテストセットの2つに分けて、トレーニングセットとテストセットの</p>
+
+<ul>
+<li>コスト関数</li>
+<li>分類問題のミス率</li>
+</ul>
+
+<p>を比較してオーバーフィッティングしていないか判断する。</p>
+
+<h2 id="モデルの選択とトレーニングセット-検証セット-テストセット">モデルの選択とトレーニングセット/検証セット/テストセット</h2>
+
+<p>データを学習用とテスト用とで分けるか？</p>
+
+<p>これらを使って、どうやってモデルを選択するのか？</p>
+
+<p>仮説が新しい学習用データを正確に予想するか、ということは意味しない。</p>
+
+<p>データセットを下記のように分ける。</p>
+
+<ul>
+<li>トレーニングセット：60％</li>
+<li>クロス検証セット：20％</li>
+<li>テストセット：20％</li>
+</ul>
+
+<p>これらのデータセットを使うことで、3つの別々のエラー値を計算できるようになる。</p>
+
+<ul>
+<li>多項式次数毎にトレーニングセットを仕様して、$\Theta$のパラメータを最適する</li>
+<li>クロス検証セットを仕様して、最小誤差を有する多項式の次数$d$を決める</li>
+<li>テストセットを用いて、一般化誤差$J_{test}^{\Theta^{(d)}}$を推定する</li>
+</ul>
+
+<h1 id="偏り-vs-分散-bias-vs-variance">偏り vs 分散(Bias vs. Variance)</h1>
+
+<h2 id="偏りか分散かを判断する-diagnosing-bias-vs-variance">偏りか分散かを判断する(Diagnosing Bias vs. Variance)</h2>
+
+<p>目的関数がアンダーフィッティングしているのか、オーバーフィッティングしているのか調べる必要がある。</p>
+
+<p><strong>高バイアス(hight bias)</strong>はアンダーフィッティングしている状態で、<strong>高分散(hight variance)</strong>はオーバーフィッティングしている状態で、これらの黄金比を見つける必要がある。</p>
+
+<p>トレニング誤差$J_{train}(\Theta)$は、次数を増やせば増やすほど減少する傾向にある。</p>
+
+<p>クロス検証誤差$J_{CV}(\Theta)$は、ある地点までは次数を増やせば増やすほど減少していく傾向にあり、ある地点を超えると次数を増やせば増やすほど増加していく傾向にある、すなわち凸曲線になる。</p>
+
+<ul>
+<li><strong>高バイアス(hight bias)</strong>: トレニング誤差$J_{train}(\Theta)$とクロス検証誤差$J_{CV}(\Theta)$が高い状態で$J_{CV}(\Theta) \approx J_{train}(\Theta)$</li>
+<li><strong>高分散(hight variance)</strong>: トレニング誤差$J_{train}(\Theta)$は低く、クロス検証誤差$J_{CV}(\Theta)$が高い状態で$J_{CV}(\Theta) \gt J_{train}(\Theta)$</li>
+</ul>
+
+<h2 id="正規化と偏り-分散-regularization-and-bias-variance">正規化と偏り／分散(Regularization and Bias/Variance)</h2>
+
+<p>ある目的関数とコスト関数。</p>
+
+<p>$$
+h_{\theta}(x) = \theta_0 + \theta_1 x + \theta_2 x^2 + \theta_3 x^3 + \theta_4 x^4 \\<br />
+J(\theta) = \frac{1}{2m} \sum_{i=1}^m (h_{\theta}(x^(i)))^2 + \frac{\lambda}{2m} \sum_{j=1}^{m} \theta_{j}^{2}
+$$</p>
+
+<p>下記のような傾向がある。</p>
+
+<ul>
+<li>$\lambda$が$0$に近づくにつれて$\theta$が大きくなり<strong>高分散(hight variance)</strong>になる。</li>
+<li>$\lambda$が無限大に近づくにつれて$\theta$が小さくなり<strong>高バイアス(hight bias)</strong>になる。</li>
+</ul>
+
+<p>適度な$\lambda$を選ぶ必要があり、$\lambda$を計算によって導き出す。</p>
+
+<ol>
+<li>ラムダのリストを作成する(${ \lambda \mid \lambda \in {0,0.01,0.02,0.04,0.08,0.16,0.32,0.64,1.28,2.56,5.12,10.24} }$)</li>
+<li>異なる次数または他の説明変数を持つ目的関数を作成する</li>
+<li>全ての関数において$\lambda$を反復し、$\Theta$を得る</li>
+<li>学習済みの$\Theta$を使って、正規化項のない$J_{cv}(\Theta)$上でのクロス検証誤差を算出する</li>
+<li>クロスバリデーションの中で一番誤差が少ないベストな組み合わせを選択する</li>
+<li>最良の$\Theta$と$\lambda$を$J_{test}(\Theta)$に適用して、一般化できているか確認する</li>
+</ol>
+
+<h2 id="学習曲線-learning-curves">学習曲線(Learning curves)</h2>
+
+<p><strong>高バイアス(hight bias)</strong>の場合、トレーニングセットを多くすることは意味がない</p>
+
+<ul>
+<li>トレーニングセットが少ない場合、$J_{train}(\Theta)$と$J_{CV}(\Theta)$は共に高い</li>
+<li>トレーニングセットが多い場合、$J_{train}(\Theta)$と$J_{CV}(\Theta)$は共に高いままだが$J_{train}(\Theta) \approx J_{CV}(\Theta)$</li>
+</ul>
+
+<p><strong>高分散(hight variance)</strong>の場合、トレーニングセットを多くすることは意味がある</p>
+
+<ul>
+<li>トレーニングセットが少ない場合、$J_{train}(\Theta)$は低く、$J_{CV}(\Theta)$は高い</li>
+<li>トレーニングセットが多い場合、$J_{train}(\Theta)$は増加し、$J_{CV}(\Theta)$は減少しつづけるが、 $J_{train}(\Theta)$と$J_{CV}(\Theta)$の差は大きいまま。</li>
+</ul>
+
+<h2 id="deciding-what-to-do-next-revisited">Deciding What to Do Next Revisited</h2>
+
+<ul>
+<li>もっと多くのトレーニングデータを得るか
+
+<ul>
+<li>高分散を解決する</li>
+</ul></li>
+<li>説明変数を少なくするか
+
+<ul>
+<li>高分散を解決する</li>
+</ul></li>
+<li>説明変数を多くするか
+
+<ul>
+<li>高バイアスを解決する</li>
+</ul></li>
+<li>多次元の説明変数を加えるか
+
+<ul>
+<li>高バイアスを解決する</li>
+</ul></li>
+<li>$\lambda$を大きくするか
+
+<ul>
+<li>高バイアスを解決する</li>
+</ul></li>
+<li>$\lambda$を小さくするか
+
+<ul>
+<li>高分散を解決する</li>
+</ul></li>
+</ul>
+
+<h1 id="スパム分類器の構築-building-a-spam-classifier">スパム分類器の構築(Building a Spam Classifier)</h1>
+
+<h2 id="prioritizing-what-to-work-on">Prioritizing What to work on</h2>
+
+<p>何を優先すべきか？考える必要がある。</p>
+
+<h2 id="エラー分析-error-analysis">エラー分析(Error Analysis)</h2>
+
+<p>機械学習の問題を解決するための推奨されるアプローチは次のとおり。</p>
+
+<ul>
+<li>簡単なアルゴリズムから始めて、すぐに実装し、早い段階でクロス検証データを使ってテストする
+
+<ul>
+<li>高バイアス、高バリアンスかがわかる</li>
+</ul></li>
+<li>学習曲線をプロットして、より多くのデータ、より多くの機能などが役立つかどうかを判断する</li>
+<li>クロス検証データ内のサンプルのエラーを手動で調べ、エラーが発生した傾向を見つける</li>
+</ul>
+
+<p>エラー分析は、クロス検証の分類のエラーを人力で見る作業
+- どのようなカテゴリについて分類を間違えているか
+- どのような追加の説明変数があれば精度が上がるだろうか
+手動で見ながら考える。</p>
+
+<p>機械学習の実装をする際は、いろいろなアイデアが出てきて、試したくなるだろうが、そんな時にそのアイデアを導入した場合としなかった場合とで$J_{CV}(\Theta)$の誤差を見てみる。</p>
+
+<p>導入したら誤差が高まるようであれば入れなければいいし、低くなるのなら入れたほうが良い、と素早く意思決定ができるようになる。</p>
+
+<h1 id="スキューデータの扱い-handling-skewed-data">スキューデータの扱い(Handling Skewed Data)</h1>
+
+<h2 id="error-metrics-for-skewed-classes">Error metrics for skewed classes</h2>
+
+<p>スキューデータ(Skewed Data)に対しては、別の評価指標を用いた方が良い。</p>
+
+<p>例えばがん患者を分類する問題を考えよう。</p>
+
+<p>99%の患者を正しく判断できていた、このモデルは好ましいだろうか？</p>
+
+<p>そうとは限らない。なぜなら全体の1%ががん患者で、全員に対してがんでない、と判断しても99%の患者を正確に判断できていることになるから。</p>
+
+<p>このような、陽性と陰性の割合が歪んでいるのを<strong>スキュークラス(Skewed classes)</strong>と呼ぶ。</p>
+
+<p>このような場合、正確性を図る評価としては何を持つのが良いか。</p>
+
+<p>下記に予測(Predict)と実施(Actual)の値を表にした。</p>
+
+<table>
+<thead>
+<tr>
+<th>予測\実際</th>
+<th>1</th>
+<th>0</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1</td>
+<td>True Positive</td>
+<td>False Positive</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>False Negative</td>
+<td>True Negative</td>
+</tr>
+</tbody>
+</table>
+
+<p>適合率(Precision)は$y=1$と予測したもののうち、実際に$y=1$だったものの割合。</p>
+
+<p>$$
+P(recision) = True Positive / (True Positive + False Positive)
+$$</p>
+
+<p>再現率(Recall)は$y=1$と予測したもののうち、正しく$y=1$と予測できたものの割合。</p>
+
+<p>$$
+R(ecall) = True Positive / (True Positive + False Negative)
+$$</p>
+
+<p>これらは高ければ良い。</p>
+
+<p>$y=1$に稀な<strong>スキュークラス(Skewed classes)</strong>を置く。</p>
+
+<h2 id="trading-off-precision-and-recall">Trading Off Precision and Recall</h2>
+
+<p>適合率(Precision)と再現率(Recall)はトレードオフな関係にある。</p>
+
+<p>敷居値を上げると適合率(Precision)が上がり、再現率(Recall)は下がる。</p>
+
+<p>敷居値を下げると適合率(Precision)が下がり、再現率(Recall)は上がる。</p>
+
+<p>このような敷居値を決める方法に<strong>Fスコア</strong>という適合率(Precision)と再現率(Recall)の調和平均を取る指標を用いる。</p>
+
+<p>$$
+F Score = 2*(\frac {PR}{P+R})
+$$</p>
+
+<p>Fスコアが一番高くなる敷居値を選べば良い。</p>
+
+<h1 id="uing-large-data-sets">Uing Large Data sets</h1>
+
+<h2 id="data-for-machine-learning">Data for machine learning</h2>
+
+<p>機械学習のアルゴリズムの精度は、アルゴリズムの方式ではなくいかに大量のトレーニングセットを与えることができるかどうかということにかかっている。</p>
+
+<p>大量のトレーニングセットがアルゴリズムの精度を上げることの前提は下記のおおり。</p>
+
+<ul>
+<li>人間のエクスパートがyを予測できるだけのfeatureがあるか</li>
+<li>大量のトレーニングデータを与えられ、パラメータをアルゴリズムが学習できるか</li>
+</ul>
+
+          </div>
+        </div>
+        <div class="pagination">
+          <a class="btn previous " href="https://gurimusan.github.io/blog/2017/12/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-7%E9%80%B1%E7%9B%AE/"> Prev</a>  
+          <a class="btn next " href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-5%E9%80%B1%E7%9B%AE/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  },
+  CommonHTML: { linebreaks: { automatic: true } },
+  "HTML-CSS": { linebreaks: { automatic: true } },
+         SVG: { linebreaks: { automatic: true } }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>

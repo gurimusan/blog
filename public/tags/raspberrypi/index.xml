@@ -13,10 +13,10 @@
     
     <item>
       <title>Raspberry PI で、ADCを使って温度を測定する</title>
-      <link>https://gurimusan.github.io/blog/post/raspberry-pi-how-to-measuring-temperature-using-adc/</link>
+      <link>https://gurimusan.github.io/blog/2016/09/raspberry-pi-%E3%81%A7adc%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E6%B8%A9%E5%BA%A6%E3%82%92%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B/</link>
       <pubDate>Thu, 29 Sep 2016 23:52:56 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/raspberry-pi-how-to-measuring-temperature-using-adc/</guid>
+      <guid>https://gurimusan.github.io/blog/2016/09/raspberry-pi-%E3%81%A7adc%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E6%B8%A9%E5%BA%A6%E3%82%92%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B/</guid>
       <description>やりたいこと アナログ温度センサを使って、Raspberry PIで測る。
 使用する機器、及び部品 温度センサは MCP9700を利用する。
 MCP9700はアナログセンサで、Raspberry PI のピンはデジタルな入力しかできないので、アナログ-デジタル変換を行うために、ADコンバータ MCP3008を利用する。

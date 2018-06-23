@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> coursera 機械学習 5週目 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-5%E9%80%B1%E7%9B%AE/">coursera 機械学習 5週目</a></h2>
+          <span class="post-date">Nov 19, 2017 </span>
+          <div class="post-content">
+            
+
+<h1 id="ニューラルネットワーク-neural-network-のコスト関数">ニューラルネットワーク(Neural Network)のコスト関数</h1>
+
+<p>ロジスティック回帰のコスト関数は下記のように定義された。</p>
+
+<p>$$
+J(\theta) = - \frac{1}{m} \sum_{i=1}^m \large[ y^{(i)}\ \log (h_\theta (x^{(i)})) + (1 - y^{(i)})\ \log (1 - h_\theta(x^{(i)}))\large] + \frac{\lambda}{2m}\sum_{j=1}^n \theta_j^2 \\<br />
+$$</p>
+
+<p>ニューラルネットワークのコスト関数は下記のように定義される。</p>
+
+<p>$$
+J(\Theta) = - \frac{1}{m} \large[ \sum_{i=1}^m \sum_{k=1}^K y_{k}^{(i)} \log (h_\theta (x^{(i)}))_k + (1 - y^{(i)})\ \log (1 - (h_\theta(x^{(i)}))_k) \large] + \frac{\lambda}{2m} \sum_{l=1}^{L-1} \sum_{i=1}^{s_l}\sum_{j=1}^{s_l + 1}(\Theta_{ji}^{(l)})^2 \\<br />
+L: レイア数 \\<br />
+s_l: l層におけるユニット数
+$$</p>
+
+<h1 id="バックプロパゲーション-backpropagation">バックプロパゲーション(Backpropagation)</h1>
+
+<p>次に、線形回帰やロジスティック回帰と同様に、コスト関数を最小化することを考える。</p>
+
+<p>これは、以下のように各レイアの重み$\Theta$の各要素で$J(\Theta)$を偏微分したもので表される。</p>
+
+<p>$$
+\dfrac{\partial}{\partial \Theta_{i,j}^{(l)}}J(\Theta)
+$$</p>
+
+<p>この偏微分を実行するために、<strong>バックプロパゲーション(Backpropagation)</strong>というアルゴリズムがある。</p>
+
+<p><strong>バックプロパゲーション(Backpropagation)</strong>の手順は下記のとおり。</p>
+
+<ul>
+<li>$\Delta_{ij}^{(l)} = 0$で初期化(全てのi,j,l)</li>
+<li>レイア1の$a^{(1)}$を$a^{(1)} = x^{(i)}$とする($x^{(i)}$は入力値)</li>
+<li><strong>フォアワードプロパゲーション(Forwardpropagation)</strong>で$a^{(l)} = g(z^{(l)}) = g(\Theta^{(l-1)}a^{(l-1)})$を求める</li>
+<li>L層の誤差、$\sigma^{(L)} = a^{(L)} - y^{(t)}$を求める</li>
+<li>L層より前の各レイアの誤差、$\sigma^{(l)} = ((\Theta^{(l)})^{\mathrm{ T }} \sigma^{(l+1)}) .* a^{(l)} .* (1 - a^{(l)})$
+
+<ul>
+<li>$a^{(l)} .* (1 - a^{(l)}$ は $g(z^{(l)})$を微分した値なので$g&rsquo;(z^{(l)}) = a^{(l)} .* (1 - a^{(l)}$</li>
+</ul></li>
+<li>偏微分値の更新$\Delta_(ij)^{(l)} := \Delta_(ij)^{(l)} + a_{j}^{l}\delta_{i}^{l+1}$</li>
+</ul>
+
+<p>最終的な偏微分の値は、$\Delta$の平均をとって正則したもので、下記のようになる。</p>
+
+<p>$$
+\begin{cases}
+D^{(l)}_{i,j} := \dfrac{1}{m}\left(\Delta^{(l)}_{i,j} + \lambda\Theta^{(l)}_{i,j}\right) &amp; (j \ge 1) \\<br />
+D^{(l)}_{i,j} := \dfrac{1}{m}\Delta^{(l)}_{i,j} &amp; (j = 1)
+\end{cases}
+$$</p>
+
+<p>$$
+D^{(l)}_{i,j} := \dfrac{1}{m}\left(\Delta^{(l)}_{i,j} + \lambda\Theta^{(l)}_{i,j}\right) (j \ge 1) \\<br />
+$$</p>
+
+<h1 id="gradient-checking">Gradient checking</h1>
+
+<p>コスト関数$J(\Theta)$の偏微分の近似値と、<strong>バックプロパゲーション(Backpropagation)</strong>で求めた偏微分の値との比較を行うことで、<strong>バックプロパゲーション(Backpropagation)</strong>が機能しているか調べることができる。</p>
+
+<p>$$
+gradApprox = \frac {J(\Theta + \epsilon) - J(\Theta - \epsilon)} {2\epsilon} \approx  \dfrac{\partial}{\partial \Theta_{i,j}^{(l)}}J(\Theta)
+$$</p>
+
+<p><strong>Gradient checking</strong>は遅いから、プログラムの検証が終わったら、チェックアルゴリズムは切ること。</p>
+
+<h1 id="ランダム初期化-random-initialization">ランダム初期化(Random initialization)</h1>
+
+<p>線形回帰やロジスティクス回帰や$\Theta$を$0$を使って初期化したが、ニューラルネットワークでは機能しない。</p>
+
+<p>$0$で初期化された$\Theta$をニューラルネットワークで利用すると、バックプロパゲーションすると、全てのノードで同じ値に更新されてしまう。</p>
+
+<p>この問題を解決するために、ランダムな値で初期化した$\Theta$を生成し、利用する。</p>
+
+<p>初期化に使われるランダムな値は $[-\epsilon,\epsilon]$ の間の値で生成し、$\Theta$は下記の式を使って初期化する。</p>
+
+<pre><code class="language-octave">Theta1 = rand(10,11) * (2 * INIT_EPSILON) - INIT_EPSILON;
+Theta2 = rand(10,11) * (2 * INIT_EPSILON) - INIT_EPSILON;
+Theta3 = rand(1,11) * (2 * INIT_EPSILON) - INIT_EPSILON;
+</code></pre>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>最初に隠れ層のユニット数、出力層のユニット数等のニューラルネットワークのレイアウトを選択する。</p>
+
+<ul>
+<li>入力ユニットの数 = 説明変数$x^(i)$の次元</li>
+<li>出力ユニットの数 = 分類するクラスの数</li>
+<li>隠れ層のユニットの数 = 多ければ多いほど良いが、計算量が多くなるため、バランスを取るため入力ユニット数と同程度〜4倍程度まで</li>
+<li>隠れ層の数は最初はは1つで、結果を見て多くしていく。複数の隠れ層がある場合は、全ての隠れ層は同じユニット数となることがオススメ</li>
+</ul>
+
+<p>ニューラルネットワークを実装方法する</p>
+
+<ul>
+<li>ランダムなｋ値で重み$\Theta$を初期化する</li>
+<li><strong>フォワードプロパゲーション(Fowardpropagation)</strong>を実装して、入力$x^{(i)}$に対する出力$h_{\Theta}(x^{(i)})$を求める</li>
+<li>コスト関数を実装して$J(\Theta)$を求める</li>
+<li><strong>バックプロパゲーション(Backpropagation)</strong>を実装してコスト関数の偏微分$\frac{\delta}{\delta\Theta_{jk}^{(l)}}$を計算する</li>
+<li><strong>Gradient checking</strong>を使ってコスト関数$J(\Theta)$の偏微分の近似値を求め、<strong>バックプロパゲーション(Backpropagation)</strong>を使って求めたコスト関数の偏微分$\frac{\delta}{\delta\Theta_{jk}^{(l)}}$との比較を行い、<strong>バックプロパゲーション(Backpropagation)</strong>が機能していることを確認する
+
+<ul>
+<li>確認できたら<strong>Gradient checking</strong>を切る</li>
+</ul></li>
+<li>再急降下法などの勾配法を使って、コスト関数$J(\Theta)$を最小化する重み$\Theta$を求める</li>
+</ul>
+
+          </div>
+        </div>
+        <div class="pagination">
+          <a class="btn previous " href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-6%E9%80%B1%E7%9B%AE/"> Prev</a>  
+          <a class="btn next " href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-4%E9%80%B1%E7%9B%AE/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  },
+  CommonHTML: { linebreaks: { automatic: true } },
+  "HTML-CSS": { linebreaks: { automatic: true } },
+         SVG: { linebreaks: { automatic: true } }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>

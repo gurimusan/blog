@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> coursera 機械学習 4週目 &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-4%E9%80%B1%E7%9B%AE/">coursera 機械学習 4週目</a></h2>
+          <span class="post-date">Nov 8, 2017 </span>
+          <div class="post-content">
+            
+
+<h1 id="ニューラルネットワークが必要な背景">ニューラルネットワークが必要な背景</h1>
+
+<p>ロジスティック回帰によって非線形が可能になった。</p>
+
+<p>ただ、膨大な数の説明変数(feature)が必要なものにロジスティック回帰を適用すると、ロジスティック回帰だと計算が追いつかなくなる。</p>
+
+<p>膨大な数の説明変数(feature)の例としては、写真を見て「これが車であるか否かを判断する」する場合、$50 \times 50$ pixelのグレースケール画像でも、2,500変数で、2次式にしても約3,000,000個のパラメータを計算することになる。(RGBだとその3倍以上)。</p>
+
+<p>そこで、よりよいアルゴリズムを有する人の脳にヒントを得たのが<strong>ニューラルネットワーク(Neural Network)</strong>。</p>
+
+<h1 id="ニューラルネットワーク-neural-networks">ニューラルネットワーク(Neural Networks)</h1>
+
+<p>下記は、入力X($x_1$, $x_2$, $x_3$)に対して、出力Y($h_\Theta(x)$)となる３層構造のニューラルネットワークの例である。</p>
+
+<p><img src="https://gurimusan.github.io/blog/img/20171103_coursera-machine-learning-week4/neural_network_ex1.png" alt="ニューラルネットワークの表現の仕方の例" /></p>
+
+<p>入力でもない、出力でもないレイアを<strong>隠れ層(hidden layer)</strong>といい、<strong>隠れ層(hidden layer)</strong>の各ノードを<strong>アクティベーションユニット(activation units)</strong>という。</p>
+
+<p>$$
+a_i^{(j)} = \text{レイア $j$ のアクティベーションユニット $i$} \\<br />
+\Theta^{(j)} = \text{レイア $j$ から レイア $j+1$ に移る際に使う重み行列}
+$$</p>
+
+<p>上記の図の<strong>アクティベーションユニット(activation units)</strong>、及び出力は下記のように表現される。</p>
+
+<p>$$
+a_1^{(2)} = g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3) \\<br />
+a_2^{(2)} = g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3) \\<br />
+a_3^{(2)} = g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3) \\<br />
+h_\Theta(x) = a_1^{(3)} = g(\Theta_{10}^{(2)}a_0^{(2)} + \Theta_{11}^{(2)}a_1^{(2)} + \Theta_{12}^{(2)}a_2^{(2)} + \Theta_{13}^{(2)}a_3^{(2)})
+$$</p>
+
+<p>ベクトル化した表現は下記のようになる。</p>
+
+<p>$$
+a^{(2)} = g(\Theta^{(1)}a^{(1)}) \\\<br />
+h_\Theta(x) = a^{(3)} = g(\Theta^{(2)}a^{(2)})
+$$</p>
+
+<p>つまり</p>
+
+<p>$$
+a^{(j)} = g(\Theta^{(j-1)}a^{(j-1)})
+$$</p>
+
+<p>レイヤ$j$からレイア$j+1$を計算する場合、下記のように表現できる。</p>
+
+<p>$$
+a^{(j+1)} = g(\Theta^{(j)}a^{(j)})
+$$</p>
+
+<p>これは、ロジスティック回帰と同じようなことを入力層から出力層に間で行っていることになる。</p>
+
+<h1 id="ニューラルネットワーク-neural-networks-の例">ニューラルネットワーク(Neural Networks)の例</h1>
+
+<h2 id="and">AND</h2>
+
+<p>$$
+\boldsymbol{ \Theta } = \begin{bmatrix} -30 &amp; 20 &amp; 20 \end{bmatrix} \\<br />
+\boldsymbol{ X } = \begin{bmatrix} 1 \\\ x_1 \\\ x_2  \end{bmatrix} \\<br />
+$$</p>
+
+<p>$$
+h_{ \Theta }(x) = g(\boldsymbol{ \Theta }\boldsymbol{ X }) = g(-30 + 20x_1 + 20x_2)
+$$</p>
+
+<p>$$
+\begin{array}{c|c|c}
+x_1 &amp; x_2 &amp; h_\Theta(x) \\<br />
+\hline
+0 &amp; 0 &amp; 0 \\<br />
+1 &amp; 0 &amp; 0 \\<br />
+0 &amp; 1 &amp; 0 \\<br />
+1 &amp; 1 &amp; 1 \\<br />
+\end{array}
+$$</p>
+
+<h2 id="or">OR</h2>
+
+<p>$$
+\boldsymbol{ \Theta } = \begin{bmatrix} -10 &amp; 20 &amp; 20 \end{bmatrix} \\<br />
+\boldsymbol{ X } = \begin{bmatrix} 1 \\\ x_1 \\\ x_2  \end{bmatrix} \\<br />
+$$</p>
+
+<p>$$
+h_{ \Theta }(x) = g(\boldsymbol{ \Theta }\boldsymbol{ X }) = g(-10 + 20x_1 + 20x_2)
+$$</p>
+
+<p>$$
+\begin{array}{c|c|c}
+x_1 &amp; x_2 &amp; h_\Theta(x) \\<br />
+\hline
+0 &amp; 0 &amp; 0 \\<br />
+1 &amp; 0 &amp; 1 \\<br />
+0 &amp; 1 &amp; 1 \\<br />
+1 &amp; 1 &amp; 1 \\<br />
+\end{array}
+$$</p>
+
+<h2 id="nor">NOR</h2>
+
+<p>$$
+\boldsymbol{ \Theta } = \begin{bmatrix} 10 &amp; -20 &amp; -20 \end{bmatrix} \\<br />
+\boldsymbol{ X } = \begin{bmatrix} 1 \\\ x_1 \\\ x_2  \end{bmatrix} \\<br />
+$$</p>
+
+<p>$$
+h_{ \Theta }(x) = g(\boldsymbol{ \Theta }\boldsymbol{ X }) = g(10 - 20x_1 - 20x_2)
+$$</p>
+
+<p>$$
+\begin{array}{c|c|c}
+x_1 &amp; x_2 &amp; h_\Theta(x) \\<br />
+\hline
+0 &amp; 0 &amp; 1 \\<br />
+1 &amp; 0 &amp; 0 \\<br />
+0 &amp; 1 &amp; 0 \\<br />
+1 &amp; 1 &amp; 0 \\<br />
+\end{array}
+$$</p>
+
+<h2 id="xor">XOR</h2>
+
+<p>レイア2に NAND と OR、レイア3に AND。</p>
+
+<p>$$
+\boldsymbol{ \Theta^{(1)} } = \begin{bmatrix} 30 &amp; -20 &amp; -20 \\ -10 &amp; 20 &amp; 20 \end{bmatrix} \\<br />
+\boldsymbol{ \Theta^{(2)} } = \begin{bmatrix} -30 &amp; 20 &amp; 20 \end{bmatrix} \\<br />
+\boldsymbol{ X } = \begin{bmatrix} 1 \\\ x_1 \\\ x_2  \end{bmatrix} \\<br />
+$$</p>
+
+<p>$$
+a^{(2)} = g(\boldsymbol{ \Theta^{(1)} }\boldsymbol{ X }) \\<br />
+a^{(3)} = g(\boldsymbol{ \Theta^{(2)} }\boldsymbol{ a^{(2)} }) \\<br />
+h_{ \Theta }(x) = a^{(3)}
+$$</p>
+
+<p>$$
+\begin{array}{c|c|c|c|c}
+x_1 &amp; x_2 &amp; a_{1}^{(2)} &amp; a_{2}^{(2)} &amp; h_\Theta(x) \\<br />
+\hline
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\<br />
+1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 \\<br />
+0 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\<br />
+1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 \\<br />
+\end{array}
+$$</p>
+
+<h2 id="xnor">XNOR</h2>
+
+<p>レイア2に AND と (NOT $x_1$) AND (NOT $x_2$)、レイア3に OR。</p>
+
+<p>$$
+\boldsymbol{ \Theta^{(1)} } = \begin{bmatrix} -30 &amp; 20 &amp; 20 \\ 10 &amp; -20 &amp; -20 \end{bmatrix} \\<br />
+\boldsymbol{ \Theta^{(2)} } = \begin{bmatrix} -10 &amp; 20 &amp; 20 \end{bmatrix} \\<br />
+\boldsymbol{ X } = \begin{bmatrix} 1 \\\ x_1 \\\ x_2  \end{bmatrix} \\<br />
+$$</p>
+
+<p>$$
+a^{(2)} = g(\boldsymbol{ \Theta^{(1)} }\boldsymbol{ X }) \\<br />
+a^{(3)} = g(\boldsymbol{ \Theta^{(2)} }\boldsymbol{ a^{(2)} }) \\<br />
+h_{ \Theta }(x) = a^{(3)}
+$$</p>
+
+<p>$$
+\begin{array}{c|c|c|c|c}
+x_1 &amp; x_2 &amp; a_{1}^{(2)} &amp; a_{2}^{(2)} &amp; h_\Theta(x) \\<br />
+\hline
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 \\<br />
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\<br />
+0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\<br />
+1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 \\<br />
+\end{array}
+$$</p>
+
+<h1 id="多クラス分類-multiclass-classification">多クラス分類(Multiclass Classification)</h1>
+
+<p><strong>多クラス分類(Multiclass Classification)</strong>の場合は、出力が下記のように複数持つようになり、該当要素だけを$1$にする。</p>
+
+<p>$$
+{h_\Theta(x) \approx \begin{pmatrix}
+1\\<br />
+0\\<br />
+0\\<br />
+0
+\end{pmatrix}
+,
+\hspace{10px}
+h_\Theta(x) \approx \begin{pmatrix}
+0\\<br />
+1\\<br />
+0\\<br />
+0
+\end{pmatrix}
+,
+\hspace{10px}
+h_\Theta(x) \approx \begin{pmatrix}
+0\\<br />
+0\\<br />
+1\\<br />
+0
+\end{pmatrix}
+,
+\hspace{10px}
+\hspace{10px}
+h_\Theta(x) \approx \begin{pmatrix}
+0\\<br />
+0\\<br />
+0\\<br />
+1
+\end{pmatrix}
+}
+$$</p>
+
+          </div>
+        </div>
+        <div class="pagination">
+          <a class="btn previous " href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-5%E9%80%B1%E7%9B%AE/"> Prev</a>  
+          <a class="btn next " href="https://gurimusan.github.io/blog/2017/11/coursera-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92-3%E9%80%B1%E7%9B%AE/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  },
+  CommonHTML: { linebreaks: { automatic: true } },
+  "HTML-CSS": { linebreaks: { automatic: true } },
+         SVG: { linebreaks: { automatic: true } }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>
