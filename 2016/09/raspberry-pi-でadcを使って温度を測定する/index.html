@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> Raspberry PI で、ADCを使って温度を測定する &middot; gurimusan blog </title>
+
+
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/slim.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/highlight.min.css">
+<link rel="stylesheet" href="https://gurimusan.github.io/blog/css/mathjax.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://gurimusan.github.io/blog/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://gurimusan.github.io/blog/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="gurimusan blog" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://gurimusan.github.io/blog/">gurimusan blog</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">&ac;</li>
+  
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://gurimusan.github.io/blog/2016/09/raspberry-pi-%E3%81%A7adc%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E6%B8%A9%E5%BA%A6%E3%82%92%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B/">Raspberry PI で、ADCを使って温度を測定する</a></h2>
+          <span class="post-date">Sep 29, 2016 </span>
+          <div class="post-content">
+            
+
+<h1 id="やりたいこと">やりたいこと</h1>
+
+<p>アナログ温度センサを使って、Raspberry PIで測る。</p>
+
+<h1 id="使用する機器-及び部品">使用する機器、及び部品</h1>
+
+<p>温度センサは MCP9700を利用する。</p>
+
+<p>MCP9700はアナログセンサで、Raspberry PI のピンはデジタルな入力しかできないので、アナログ-デジタル変換を行うために、ADコンバータ MCP3008を利用する。</p>
+
+<ul>
+<li>Raspberry PI3 Model B</li>
+<li><a href="http://akizukidenshi.com/catalog/g/gI-03286/">温度センサ MCP9700</a></li>
+<li><a href="http://akizukidenshi.com/catalog/g/gI-09485/">ADコンバータ MCP3008</a></li>
+<li><a href="http://akizukidenshi.com/catalog/g/gP-00315/">ブレッドボード EIC-801</a></li>
+<li>ジャンパワイア</li>
+</ul>
+
+<h1 id="raspberry-piでspiをセットアッフ-する">Raspberry PiでSPIをセットアップする</h1>
+
+<p>MCP3008は、SPIバスで接続する必要があるため、Raspberry PI のSPIを有効にする。</p>
+
+<p>下記コマンドを実行。</p>
+
+<pre><code>$ sudo raspi-config
+</code></pre>
+
+<p>Advanced Optionsで A6 SPIを選択して、下記の両方で Yes を選択。</p>
+
+<ul>
+<li>SPI interface to be enabled?</li>
+<li>SPI kernel module to be loaded by default?</li>
+</ul>
+
+<p>再起動。</p>
+
+<pre><code>$ sudo reboot
+</code></pre>
+
+<p>spi_bcm2835 がロードされていることを確認</p>
+
+<pre><code>$ lsmod | grep spi
+</code></pre>
+
+<p>SPI通信に必要なPythonライブラリをインストール。</p>
+
+<pre><code>$ sudo apt-get install python-pip
+$ sudo pip install spidev
+</code></pre>
+
+<h1 id="ブレッドボード配線">ブレッドボード配線</h1>
+
+<p><img src="https://gurimusan.github.io/blog/img/20160930_raspberry_pi_how_to_measuring_temperature_using_adc/breadboard.jpg" alt="ブレッドボードの配線" /></p>
+
+<h2 id="温度センサ-mcp9700-の配線">温度センサ MCP9700 の配線</h2>
+
+<p><a href="http://akizukidenshi.com/download/MCP9701-ETO.pdf">データシート1</a></p>
+
+<p><a href="http://akizukidenshi.com/download/mcp9700.pdf">データシート2</a></p>
+
+<ul>
+<li>VDD -&gt; Raspberry Pi 3.3V</li>
+<li>VOUT -&gt; VOUT -&gt; MCP3008 CH0</li>
+<li>GND -&gt; Raspberry Pi GND</li>
+</ul>
+
+<h2 id="mcp3008の配線">MCP3008の配線</h2>
+
+<p><a href="http://akizukidenshi.com/download/ds/microchip/mcp3008.pdf">データシート</a></p>
+
+<ul>
+<li>MCP3008 VDD -&gt; Raspberry PI 3.3V</li>
+<li>MCP3008 VREF -&gt; Raspberry PI 3.3V</li>
+<li>MCP3008 AGND -&gt; Raspberry PI GND</li>
+<li>MCP3008 CLK -&gt; Raspberry PI GPIO 11 (SCLK)</li>
+<li>MCP3008 DOUT -&gt; Raspberry PI GPIO 9 (MISO)</li>
+<li>MCP3008 DIN -&gt; Raspberry PI GPIO 10 (MOSI)</li>
+<li>MCP3008 CS/SHDN -&gt; Raspberry PI GPIP 8 (CE0)</li>
+<li>MCP3008 DGND -&gt; Raspberry PI GND</li>
+</ul>
+
+<h1 id="スクリプト">スクリプト</h1>
+
+<p>下記を adc_tmp36.py というファイル名で保存。</p>
+
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+
+import sys
+
+import time
+
+import spidev
+
+spi = spidev.SpiDev()
+spi.open(0,0)
+
+
+def analog_read(channel):
+    r = spi.xfer2([1, (8 + channel) &lt;&lt; 4, 0])
+    adc_out = ((r[1]&amp;3) &lt;&lt; 8) + r[2]
+    return adc_out
+
+
+if __name__ == '__main__':
+    try:
+        while True:
+            reading = analog_read(0)
+            voltage = reading * 3.3 / 1024
+            temp_c = voltage * 100 - 50
+            print(&quot;Volts V=%f\tTemp C=%f&quot; % (voltage, temp_c))
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        spi.close()
+
+    sys.exit(0)
+</code></pre>
+
+<p>実行すると下記ように出力される。</p>
+
+<pre><code>$ python adc_tmp36.py
+Volts V=0.802441    Temp C=30.244141
+Volts V=0.783105    Temp C=28.310547
+Volts V=0.795996    Temp C=29.599609
+Volts V=0.799219    Temp C=29.921875
+Volts V=0.799219    Temp C=29.921875
+Volts V=0.799219    Temp C=29.921875
+Volts V=0.799219    Temp C=29.921875
+Volts V=0.799219    Temp C=29.921875
+Volts V=0.802441    Temp C=30.244141
+</code></pre>
+
+<p>室温は25℃くらいだが、高く表示される。</p>
+
+<p>精度は ±4℃ らしいので、その誤差の範囲なのか？</p>
+
+<h1 id="スクリプトの説明">スクリプトの説明</h1>
+
+<h2 id="analog-read">analog_read</h2>
+
+<p>MCP3008の特定のチャネルへの送受信のやりとりをする関数。</p>
+
+<p>CP3008のデータシートを見ると、MCP3008への送受信を行う方法が記載されている。</p>
+
+<p><img src="https://gurimusan.github.io/blog/img/20160930_raspberry_pi_how_to_measuring_temperature_using_adc/mcp3008_spi_communication.png" alt="CP3008の入力値と返り値" /></p>
+
+<p>送信データは、</p>
+
+<pre><code>00000001 1xxx0000 00000000
+</code></pre>
+
+<p>のような24bitのデータとなる。</p>
+
+<p>最初の 00000001 はスタートビット。</p>
+
+<p>1xxx は 読み込みたいチャネルのよって変わる。</p>
+
+<p>例えば、</p>
+
+<ul>
+<li>ch 0 なら 1000</li>
+<li>ch 1 なら 1001</li>
+<li>ch 2 なら 1010</li>
+</ul>
+
+<p>のようになる。</p>
+
+<p>プログラムコードに戻ると、</p>
+
+<pre><code>r = spi.xfer2([1, (8 + channel) &lt;&lt; 4, 0])
+</code></pre>
+
+<p>という処理では、xfer2という関数に3つの値を格納した配列を渡しているが、これが上記の24bitの送信データを表している。</p>
+
+<p>つまり、xfer2という関数に渡している配列のうち</p>
+
+<ul>
+<li>最初の要素は 1 は 00000001 を表す</li>
+<li>2番目の要素の (8 + channel) &lt;&lt; 4 は 1xxx0000 を表す</li>
+<li>3癌目の要素は 00000000 を表す</li>
+</ul>
+
+<p>xfer2からの返り値は</p>
+
+<pre><code>[0, 0, 246]
+</code></pre>
+
+<p>のようなデータが返却される。</p>
+
+<p>これも入力値と同様に24bitのデータを表す。</p>
+
+<p>MCP3008からの受信データは、下位10bitがチャネルへ入力されたデータとなるため、</p>
+
+<pre><code>adc_out = ((r[1]&amp;3) &lt;&lt; 8) + r[2]
+</code></pre>
+
+<p>という処理は、xfer2から返却された配列の</p>
+
+<ul>
+<li>2番目の要素と3、00000011との論理積を取ることで、下位2bitを取得する</li>
+<li>2番目の要素の下位2bitを8bit左にシフトして、3番目の要素との論理和をとることで、受信データの下位10bitが取得する</li>
+</ul>
+
+<p>最後に、取得した下位10bitのデータを返却する。</p>
+
+<h2 id="main">main</h2>
+
+<p>ここで行っている処理は、下記のとおり。</p>
+
+<ul>
+<li>analog_read関数を実行して、MCP3008のch 0のデータを読み取り、受信データの下位10bitを取得する</li>
+<li>analog_read関数の返り値を電圧に変換する</li>
+<li>電圧を温度（摂氏）に変換する</li>
+</ul>
+
+<p>電圧への変換方法は、MCP3008のEQUATION 4-2を見ると、</p>
+
+<pre><code>out = (1024 * Vin) / Vref
+</code></pre>
+
+<p>と記述があるので</p>
+
+<pre><code>Vin = (out * Vref) / 1024
+</code></pre>
+
+<p>で、MCP3008からの受信データからMPC9700から出力された電圧が求まる。</p>
+
+<p>MPC9700のデータシートの4.0 活用情報」を見るとセンサーの変換関数が記載されている。</p>
+
+<pre><code>Vout = Tc1 * Ta + V0c
+
+Ta = 周囲温度
+Vout = センサー出力電圧
+V0c = 0℃の時のセンサーの出力電圧(500mV)
+Tc1 = 温度係数(10mV)
+</code></pre>
+
+<p>なので</p>
+
+<pre><code>Ta = Vout / Tc1 - V0c
+</code></pre>
+
+<p>で、温度が求まる。</p>
+
+<h1 id="参考にしたサイト">参考にしたサイト</h1>
+
+<ul>
+<li><a href="http://qiita.com/masato/items/f089a17b1c9329eb7d03">Raspberry PiのPythonからTMP36のアナログ温度センサとMCP3008のADコンバータを使う</a></li>
+<li><a href="http://pongsuke.hatenablog.com/entry/2016/01/08/111937">温度センサーを試す</a></li>
+<li><a href="http://elinux.org/RPi_Low-level_peripherals#Model_A.2B.2C_B.2B_and_B2">Raspberry PI のピン配置</a></li>
+</ul>
+
+          </div>
+        </div>
+        <div class="pagination">
+          <a class="btn previous " href="https://gurimusan.github.io/blog/2016/11/ansible%E3%81%A7ec2%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/"> Prev</a>  
+          <a class="btn next " href="https://gurimusan.github.io/blog/1/01/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io">Hugo</a>. This theme—Slim—is open sourced on <a href="https://github.com/zhe/hugo-theme-slim">Github</a>.</p>
+  
+</div>
+
+  </div>
+  <script src="https://gurimusan.github.io/blog/js/slim.js"></script>
+  <script src="https://gurimusan.github.io/blog/js/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: 'left',
+  displayIndent: '1em',
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
+    }
+  },
+  CommonHTML: { linebreaks: { automatic: true } },
+  "HTML-CSS": { linebreaks: { automatic: true } },
+         SVG: { linebreaks: { automatic: true } }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  
+</body>
+
+</html>

@@ -13,10 +13,10 @@
     
     <item>
       <title>Gentoo Linux をインストールする</title>
-      <link>https://gurimusan.github.io/blog/post/gentoo-install-battle/</link>
+      <link>https://gurimusan.github.io/blog/2017/03/gentoo-linux-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</link>
       <pubDate>Wed, 08 Mar 2017 23:52:56 +0900</pubDate>
       
-      <guid>https://gurimusan.github.io/blog/post/gentoo-install-battle/</guid>
+      <guid>https://gurimusan.github.io/blog/2017/03/gentoo-linux-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</guid>
       <description>Gentoo Linux をインストールする 概要 転職し、新しい会社に入社した。
 PCを支給してくれるいうことで、macにしようかなと思っていたのだが、折角なのでdockerをまともに使える環境が良いなと思い、linuxベースの開発環境を作ることにした。
 そんな折、MacBook Proを捨ててThinkpad T460sを買ってgentooを入れたという記事をはてブで見つけて、gentooベースにすることにした。
